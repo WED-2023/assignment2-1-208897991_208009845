@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+  
     <div id="nav">
       <router-link :to="{ name: 'main' }">Vue Recipes</router-link>|
       <router-link :to="{ name: 'search' }">Search</router-link>|
@@ -14,12 +15,18 @@
       </span>
     </div>
     <router-view />
+    <main-page></main-page>
   </div>
 </template>
 
 <script>
+
+import MainPage from './pages/MainPage.vue'; 
 export default {
   name: "App",
+  components:{
+    MainPage
+  },
   methods: {
     Logout() {
       this.$root.store.logout();
