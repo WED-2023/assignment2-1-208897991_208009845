@@ -1,16 +1,25 @@
 <template>
   <div id="app">
-  
+
     <div id="nav">
-      <router-link :to="{ name: 'main' }">Vue Recipes</router-link>|
+      <router-link :to="{ name: 'main' }">Recipes</router-link>|
       <router-link :to="{ name: 'search' }">Search</router-link>|
+      <router-link :to="{ name: 'about'}"> About</router-link>
       {{ !$root.store.username }}
       <span v-if="!$root.store.username">
         Guest:
+        <h2>hello guest</h2>
         <router-link :to="{ name: 'register' }">Register</router-link>|
         <router-link :to="{ name: 'login' }">Login</router-link>|
       </span>
       <span v-else>
+         <b-button @click="toggleModal">Add New Recipe</b-button>
+        <b-dropdown id="dropdown-left" text="Personal Info" variant="primary" class="m-2">
+        <b-dropdown-item href="#"><router-link :to="{ name: 'favorites' }">Favorites</router-link></b-dropdown-item>
+        <b-dropdown-item href="#"><router-link :to="{ name: 'myrecipes' }">My Recipes</router-link></b-dropdown-item>
+        <b-dropdown-item href="#"><router-link :to="{ name: 'familyrecipes' }">Family Recipes</router-link></b-dropdown-item>
+        </b-dropdown>
+        <h1 class="user-greeting">Hello, {{ $root.store.username }}</h1>|
         {{ $root.store.username }}: <button @click="Logout">Logout</button>|
       </span>
     </div>
@@ -27,6 +36,7 @@ export default {
   components:{
     MainPage
   },
+  
   methods: {
     Logout() {
       this.$root.store.logout();
