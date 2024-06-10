@@ -1,40 +1,60 @@
 <template>
+<div class="recipe-card">
   <router-link
     :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
-    class="recipe-preview"
-  >
+    class="recipe-preview">
     <div class="recipe-body">
-      <img v-if="image_load" :src="recipe.image" class="recipe-image" />
-    </div>
+      <img v-if="image_load"  :src="recipe.image" class="recipe-image"  />
+    </div></router-link>
+    
     <div class="recipe-footer">
-      <div :title="recipe.title" class="recipe-title">
+      <h3 :title="recipe.title" class="recipe-title">
         {{ recipe.title }}
-      </div>
+      </h3>
       <ul class="recipe-overview">
         <li>{{ recipe.readyInMinutes }} minutes</li>
         <li>{{ recipe.aggregateLikes }} likes</li>
       </ul>
+      <div> 
+        <b-icon v-if="isViewed" icon="eye" class="viewed-icon"></b-icon>
+        <span v-if="recipe.vegetarian"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Vegetarian-mark.svg/1200px-Vegetarian-mark.svg.png" class="vegi" /></span>
+        <span v-if="recipe.vegan"><img src="https://uxwing.com/wp-content/themes/uxwing/download/food-and-drinks/vegan-icon.png" class="vegan" /></span>
+        <span v-if="recipe.glutenFree"><img src="https://cdn-icons-png.flaticon.com/512/4337/4337722.png" class="glutenFree" /></span>
+        <div class="btn-group-toggle">
+          <label class="btn btn-secondary active" style="background-color: white;">
+            <input type="checkbox" v-model="isFavorite" @change="toggleFavorite">
+            <img :src="favoriteImage" alt="Favorite" class="favorite-icon">
+          </label>
+        </div>
+      </div>
     </div>
-  </router-link>
+</div>
+
+
 </template>
 
 <script>
 export default {
-  mounted() {
-    this.axios.get(this.recipe.image).then((i) => {
-      this.image_load = true;
-    });
-  },
+  // mounted() {
+  //   this.axios.get(this.recipe.image).then((i) => {
+  //     this.image_load = true;
+  //   });
+  // },
   data() {
     return {
-      image_load: false
+      image_load: true,
+      isFavorite: this.getFavoriteState(this.recipe),
+      isViewed: this.checkIfViewed(this.recipe.id)
     };
   },
+
+  name: 'RecipePreviewCard',
   props: {
+    
     recipe: {
       type: Object,
       required: true
-    }
+    },
 
     // id: {
     //   type: Number,
@@ -59,7 +79,62 @@ export default {
     //     return undefined;
     //   }
     // }
+  },
+    computed: {
+    favoriteImage() {
+      return this.isFavorite ? require('@/assets/favorite-icon.png') : require('@/assets/not-favorite-icon.png');
+    }
+  },
+  methods: {
+        checkIfViewed(recipeId) {
+      let viewedRecipes = JSON.parse(localStorage.getItem('viewedRecipes')) || [];
+      return viewedRecipes.includes(recipeId);
+    },
+        toggleFavorite() {
+      this.isFavorite = !this.isFavorite;
+      if (this.isFavorite) {
+        this.addToFavorites();
+      } else {
+        this.removeFromFavorites();
+      }
+    },
+        addToFavorites() {
+      let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      if (!favorites.some(r => r.id === this.recipe.id)) {
+        favorites.push(this.recipe);
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+      }
+    },
+        markAsViewed() {
+      let viewedRecipes = JSON.parse(localStorage.getItem('viewedRecipes')) || [];
+      if (!viewedRecipes.includes(this.recipe.id)) {
+        viewedRecipes.push(this.recipe.id);
+        localStorage.setItem('viewedRecipes', JSON.stringify(viewedRecipes));
+        this.isViewed = true; 
+      }
+    },
+        removeFromFavorites() {
+      let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      let index = favorites.findIndex(r => r.id === this.recipe.id);
+      if (index !== -1) {
+        favorites.splice(index, 1);
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+      }
+    },
+        getFavoriteState(recipe) {
+      let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      return favorites.some(r => r.id === recipe.id);
+    }
+  },
+    created() {
+    this.isFavorite = this.getFavoriteState(this.recipe);
+    this.isViewed = this.checkIfViewed(this.recipe.id);
+  },
+  updated() {
+    this.isFavorite = this.getFavoriteState(this.recipe);
+    this.isViewed = this.checkIfViewed(this.recipe.id);
   }
+  
 };
 </script>
 
@@ -83,7 +158,7 @@ export default {
   margin-top: auto;
   margin-bottom: auto;
   display: block;
-  width: 98%;
+  width: 40%;
   height: auto;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -137,5 +212,18 @@ export default {
   width: 90px;
   display: table-cell;
   text-align: center;
+}
+.viewed-icon{
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+.favorite-icon,
+.vegan,
+.glutenFree,
+.vegi {
+  width: 30px;
+  height: auto;
+  margin-right: 5px;
 }
 </style>

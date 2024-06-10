@@ -1,5 +1,13 @@
 import Vue from "vue";
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
+import { BIcon, BIconArrowUp, BIconArrowDown } from 'bootstrap-vue'
 
+
+Vue.use(BootstrapVueIcons)
+Vue.use(BootstrapVue)
+Vue.component('BIcon', BIcon)
+Vue.component('BIconArrowUp', BIconArrowUp)
+Vue.component('BIconArrowDown', BIconArrowDown)
 import App from "./App.vue";
 import VueAxios from "vue-axios";
 import axios from "axios";
@@ -13,8 +21,6 @@ const router = new VueRouter({
 
 import Vuelidate from "vuelidate";
 
-// import { createApp } from 'vue'
-// createApp(App).mount('#app')
 
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
