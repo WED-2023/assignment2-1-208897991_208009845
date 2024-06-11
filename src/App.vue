@@ -10,7 +10,7 @@
         Guest:
         <h2>hello guest</h2>
         <router-link :to="{ name: 'register' }">Register</router-link>|
-        <router-link :to="{ name: 'login' }">Login</router-link>|
+        <router-link :to="{ name: 'loginpage' }">Login</router-link>|
       </span>
       <span v-else>
          <b-button @click="toggleModal">Add New Recipe</b-button>

@@ -18,6 +18,11 @@ const routes = [
     component: () => import("./pages/LoginPage"),
   },
   {
+  path: "/loginpage",
+  name: "loginpage",
+  component: () => import("./pages/LoginPage"),
+},
+  {
     path: "/about",
     name: "about",
     component: () => import("./pages/AboutPage"),

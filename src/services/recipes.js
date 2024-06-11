@@ -5,8 +5,14 @@ import recipe_preview from "../assets/mocks/recipe_preview.json";
 
 export function mockGetRecipesPreview(amount = 1) {
   let recipes = [];
-  for(let i = 0; i < amount; i++){
-    recipes.push(recipe_preview);
+
+  // for(let i = 0; i < amount; i++){
+  //   recipes.push(recipe_preview[0]);
+  // }
+  let i = 0;
+  while (recipe_preview.length <= amount && i <recipe_preview.length ) {
+    recipes.push(recipe_preview[i]);
+    i++;
   }
 
   return { data: { recipes: recipes } };
