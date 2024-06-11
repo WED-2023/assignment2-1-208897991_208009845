@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkassignment_2_1"]=self["webpackChunkassignment_2_1"]||[]).push([[322],{8322:(e,s,n)=>{n.r(s),n.d(s,{default:()=>_});var t=function(){var e=this;e._self._c;return e._m(0)},r=[function(){var e=this,s=e._self._c;return s("div",[s("h1",[e._v("myrecipes")])])}];const c={name:"myrecipes"},u=c;var a=n(1001),i=(0,a.Z)(u,t,r,!1,null,"277d3c8e",null);const _=i.exports}}]);
+//# sourceMappingURL=322.b11fdec3.js.map

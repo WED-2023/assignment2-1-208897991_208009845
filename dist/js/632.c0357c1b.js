@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunkassignment_2_1"]=self["webpackChunkassignment_2_1"]||[]).push([[632],{8632:(s,e,n)=>{n.r(e),n.d(e,{default:()=>i});var t=function(){var s=this,e=s._self._c;return e("div")},a=[];const r={name:"favorites"},u=r;var l=n(1001),c=(0,l.Z)(u,t,a,!1,null,"50d5e130",null);const i=c.exports}}]);
-//# sourceMappingURL=632.c0357c1b.js.map
