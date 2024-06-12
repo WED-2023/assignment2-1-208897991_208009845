@@ -4,7 +4,7 @@
     <RecipePreviewList ref="listOfRecipes" title="Randome Recipes" class="RandomRecipes center" />
     <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
     <div>
-     <b-button @click="generateRandomRecipes" block variant="primary">More Recipes</b-button>
+     <b-button @click="generateRandomRecipes" block variant="primary">Generate More Recipes</b-button>
     </div>
     <!-- <RecipePreviewList
       title="Last Viewed Recipes"
@@ -14,11 +14,12 @@
         center: true
       }"
       disabled> </RecipePreviewList> -->
+      <div>
       <span v-if="!$root.store.username"><Login/></span>
       <span v-else> 
                     <RecipePreviewList title="Last Viewed Recipes" class="RandomRecipes" disabled/>
       </span>
-     
+       </div>
     <!-- <div
       style="position: absolute;top: 70%;left: 50%;transform: translate(-50%, -50%);"
     >
