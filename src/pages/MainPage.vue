@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1 class="title">Main Page</h1>
-    <RecipePreviewList ref="listOfRecipes" title="Randome Recipes" class="RandomRecipes center" />
+    <RecipePreviewList ref="listOfRecipes" :columns=2 :amount=4 title="Random Recipes" class="RandomRecipes center" />
     <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
     <div>
      <b-button @click="generateRandomRecipes" block variant="primary">Generate More Recipes</b-button>
@@ -17,7 +17,7 @@
       <div>
       <span v-if="!$root.store.username"><Login/></span>
       <span v-else> 
-                    <RecipePreviewList title="Last Viewed Recipes" class="RandomRecipes" disabled/>
+      <!-- <RecipePreviewList title="Last Viewed Recipes" :amount=3 class="RandomRecipes" disabled/> -->
       </span>
        </div>
     <!-- <div

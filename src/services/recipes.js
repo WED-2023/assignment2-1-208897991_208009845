@@ -9,12 +9,9 @@ export function mockGetRecipesPreview(amount = 1) {
   // for(let i = 0; i < amount; i++){
   //   recipes.push(recipe_preview[0]);
   // }
-  let i = 0;
-  while (recipe_preview.length <= amount && i <recipe_preview.length ) {
-    recipes.push(recipe_preview[i]);
-    i++;
+  for (let i = 0; i < amount; i++) {
+    recipes.push(recipe_preview[i % recipe_preview.length]);
   }
-
   return { data: { recipes: recipes } };
 }
 
