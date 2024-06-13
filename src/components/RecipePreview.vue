@@ -1,5 +1,6 @@
 <template>
 <div class="recipe-card">
+  
   <router-link
     :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
     class="recipe-preview">
