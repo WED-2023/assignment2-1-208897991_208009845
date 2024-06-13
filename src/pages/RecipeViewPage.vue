@@ -12,20 +12,27 @@
     </b-col>
   </b-row>
 </b-container>
+
+    <template #lead>
         <span v-if="recipe.vegetarian"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Vegetarian-mark.svg/1200px-Vegetarian-mark.svg.png" class="vegi" /></span>
         <span v-if="recipe.vegan"><img src="https://uxwing.com/wp-content/themes/uxwing/download/food-and-drinks/vegan-icon.png" class="vegan" /></span>
         <span v-if="recipe.glutenFree"><img src="https://cdn-icons-png.flaticon.com/512/4337/4337722.png" class="glutenFree" /></span>
-    <template #lead>
-      This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
-      featured content or information.
+              <div class="ready">Ready in {{ recipe.readyInMinutes }} minutes</div>
+              <div>Likes: {{ recipe.aggregateLikes }} likes</div>
     </template>
 
     <hr class="my-4">
 
-    <p>
-      It uses utility classes for typography and spacing to space content out within the larger
-      container.
-    </p>
+    
+            <h2>Ingredients: </h2>
+            <ul>
+               <b-list-group>
+         <b-list-group-item  v-for="(r, index) in recipe.extendedIngredients"
+                :key="index + '_' + r.id"> {{ r.original }}</b-list-group-item>
+              </b-list-group>
+            </ul>
+          
+    
 
     <b-button variant="primary" href="#">Do Something</b-button>
     <b-button variant="success" href="#">Do Something Else</b-button>
@@ -65,11 +72,6 @@
           </div>
         </div>
       </div>
-      <!-- <pre>
-      {{ $route.params }}
-      {{ recipe }}
-    </pre
-      > -->
     </div>
   </div>
 </template>
@@ -157,6 +159,7 @@ export default {
 /* .recipe-header{
 
 } */
+
 .favorite-icon,
 .vegan,
 .glutenFree,
