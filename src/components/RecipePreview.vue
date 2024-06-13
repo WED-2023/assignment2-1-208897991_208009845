@@ -9,7 +9,7 @@
       class="mb-2"
     >
     <template #header>
-        <h6 class="mb-0">{{ recipe.title }}</h6>
+        <b-link :to="{ name: 'recipe', params: { recipeId: recipe.id }}" class="text-dark"> {{ recipe.title }} </b-link>
       </template>
     <b-card-img :to="{ name: 'recipe', params: { recipeId: recipe.id }}" :src="recipe.image" alt="Image" top></b-card-img>
       <b-card-text>
