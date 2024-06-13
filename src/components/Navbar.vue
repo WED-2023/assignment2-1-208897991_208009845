@@ -1,7 +1,7 @@
 <template>
     <div id="nav">
         <b-navbar toggleable="lg" type="dark" variant="info">
-            <b-navbar-brand href="#">Cristina</b-navbar-brand>
+            <b-navbar-brand :to="{ name: 'main' }">Cristina</b-navbar-brand>
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 

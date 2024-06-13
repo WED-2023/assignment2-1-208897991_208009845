@@ -16,7 +16,7 @@
         <li>{{ recipe.aggregateLikes }} likes</li>
       </ul>
       <div> 
-        <b-icon v-if="isViewed" icon="eye" class="viewed-icon"></b-icon>
+        <b-icon v-if="true" icon="eye" class="viewed-icon"></b-icon>
         <span v-if="recipe.vegetarian"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Vegetarian-mark.svg/1200px-Vegetarian-mark.svg.png" class="vegi" /></span>
         <span v-if="recipe.vegan"><img src="https://uxwing.com/wp-content/themes/uxwing/download/food-and-drinks/vegan-icon.png" class="vegan" /></span>
         <span v-if="recipe.glutenFree"><img src="https://cdn-icons-png.flaticon.com/512/4337/4337722.png" class="glutenFree" /></span>
