@@ -1,6 +1,36 @@
 <template>
-  <div class="container">
+
     <div v-if="recipe">
+        <div class="container">
+    <div>
+  <b-jumbotron>
+    <template #header>{{ recipe.title }}</template>
+    <b-container fluid class="p-4 bg-dark">
+  <b-row>
+    <b-col>
+      <img :src="recipe.image" class="center" />
+    </b-col>
+  </b-row>
+</b-container>
+        <span v-if="recipe.vegetarian"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Vegetarian-mark.svg/1200px-Vegetarian-mark.svg.png" class="vegi" /></span>
+        <span v-if="recipe.vegan"><img src="https://uxwing.com/wp-content/themes/uxwing/download/food-and-drinks/vegan-icon.png" class="vegan" /></span>
+        <span v-if="recipe.glutenFree"><img src="https://cdn-icons-png.flaticon.com/512/4337/4337722.png" class="glutenFree" /></span>
+    <template #lead>
+      This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
+      featured content or information.
+    </template>
+
+    <hr class="my-4">
+
+    <p>
+      It uses utility classes for typography and spacing to space content out within the larger
+      container.
+    </p>
+
+    <b-button variant="primary" href="#">Do Something</b-button>
+    <b-button variant="success" href="#">Do Something Else</b-button>
+  </b-jumbotron>
+</div>
       <div class="recipe-header mt-3 mb-4">
         <h1>{{ recipe.title }}</h1>
         <img :src="recipe.image" class="center" />
@@ -9,6 +39,9 @@
         <div class="wrapper">
           <div class="wrapped">
             <div class="mb-3">
+               <span v-if="recipe.vegetarian"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Vegetarian-mark.svg/1200px-Vegetarian-mark.svg.png" class="vegi" /></span>
+        <span v-if="recipe.vegan"><img src="https://uxwing.com/wp-content/themes/uxwing/download/food-and-drinks/vegan-icon.png" class="vegan" /></span>
+        <span v-if="recipe.glutenFree"><img src="https://cdn-icons-png.flaticon.com/512/4337/4337722.png" class="glutenFree" /></span>
               <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
               <div>Likes: {{ recipe.aggregateLikes }} likes</div>
             </div>
@@ -124,4 +157,12 @@ export default {
 /* .recipe-header{
 
 } */
+.favorite-icon,
+.vegan,
+.glutenFree,
+.vegi {
+  width: 30px;
+  height: auto;
+  margin-right: 5px;
+}
 </style>
