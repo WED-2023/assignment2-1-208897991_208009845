@@ -9,8 +9,8 @@
               <b-col class="d-flex justify-content-center">
                 <img :src="recipe.image" class="center" />
               </b-col>
-              <b-col>
-                <h2>Ingredients: </h2>
+              <b-col >
+                <h2> Ingredients: </h2>
                 <ul>
                   <b-list-group>
                     <b-list-group-item v-for="(r, index) in recipe.extendedIngredients" :key="index + '_' + r.id">
@@ -37,7 +37,7 @@
               <b-icon icon="alarm-fill" variant="info"></b-icon>
             </div>
             <div>Likes: {{ recipe.aggregateLikes }} likes
-              <b-icon icon="suit-heart-fill" variant="info"></b-icon>
+              <b-icon icon="suit-heart-fill" variant="info" ></b-icon>
             </div>
           </template>
 
@@ -113,8 +113,8 @@ export default {
 
 <style scoped>
 .center {
-  width: 50%;
-  max-width: 300px; /* Adjust as needed */
+  width: 100%;
+  max-width: 600px; /* Adjust as needed */
 }
 
 .favorite-icon,
