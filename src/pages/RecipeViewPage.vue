@@ -1,76 +1,55 @@
 <template>
+  <div v-if="recipe">
+    <div class="container">
+      <div>
+        <b-jumbotron>
+          <template #header>{{ recipe.title }}</template>
+          <b-container fluid>
+            <b-row>
+              <b-col class="d-flex justify-content-center">
+                <img :src="recipe.image" class="center" />
+              </b-col>
+              <b-col>
+                <h2>Ingredients: </h2>
+                <ul>
+                  <b-list-group>
+                    <b-list-group-item v-for="(r, index) in recipe.extendedIngredients" :key="index + '_' + r.id">
+                      {{ r.original }}
+                    </b-list-group-item>
+                  </b-list-group>
+                </ul>
+              </b-col>
+            </b-row>
+          </b-container>
 
-    <div v-if="recipe">
-        <div class="container">
-    <div>
-  <b-jumbotron>
-    <template #header>{{ recipe.title }}</template>
-    <b-container fluid class="p-4 bg-dark">
-  <b-row>
-    <b-col>
-      <img :src="recipe.image" class="center" />
-    </b-col>
-  </b-row>
-</b-container>
-
-    <template #lead>
-        <span v-if="recipe.vegetarian"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Vegetarian-mark.svg/1200px-Vegetarian-mark.svg.png" class="vegi" /></span>
-        <span v-if="recipe.vegan"><img src="https://uxwing.com/wp-content/themes/uxwing/download/food-and-drinks/vegan-icon.png" class="vegan" /></span>
-        <span v-if="recipe.glutenFree"><img src="https://cdn-icons-png.flaticon.com/512/4337/4337722.png" class="glutenFree" /></span>
-              <div class="ready">Ready in {{ recipe.readyInMinutes }} minutes</div>
-              <div>Likes: {{ recipe.aggregateLikes }} likes</div>
-    </template>
-
-    <hr class="my-4">
-
-    
-            <h2>Ingredients: </h2>
-            <ul>
-               <b-list-group>
-         <b-list-group-item  v-for="(r, index) in recipe.extendedIngredients"
-                :key="index + '_' + r.id"> {{ r.original }}</b-list-group-item>
-              </b-list-group>
-            </ul>
-          
-    
-
-    <b-button variant="primary" href="#">Do Something</b-button>
-    <b-button variant="success" href="#">Do Something Else</b-button>
-  </b-jumbotron>
-</div>
-      <div class="recipe-header mt-3 mb-4">
-        <h1>{{ recipe.title }}</h1>
-        <img :src="recipe.image" class="center" />
-      </div>
-      <div class="recipe-body">
-        <div class="wrapper">
-          <div class="wrapped">
-            <div class="mb-3">
-               <span v-if="recipe.vegetarian"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Vegetarian-mark.svg/1200px-Vegetarian-mark.svg.png" class="vegi" /></span>
-        <span v-if="recipe.vegan"><img src="https://uxwing.com/wp-content/themes/uxwing/download/food-and-drinks/vegan-icon.png" class="vegan" /></span>
-        <span v-if="recipe.glutenFree"><img src="https://cdn-icons-png.flaticon.com/512/4337/4337722.png" class="glutenFree" /></span>
-              <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
-              <div>Likes: {{ recipe.aggregateLikes }} likes</div>
+          <template #lead>
+            <span v-if="recipe.vegetarian">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Vegetarian-mark.svg/1200px-Vegetarian-mark.svg.png" class="vegi" />
+            </span>
+            <span v-if="recipe.vegan">
+              <img src="https://uxwing.com/wp-content/themes/uxwing/download/food-and-drinks/vegan-icon.png" class="vegan" />
+            </span>
+            <span v-if="recipe.glutenFree">
+              <img src="https://cdn-icons-png.flaticon.com/512/4337/4337722.png" class="glutenFree" />
+            </span>
+            <div class="ready">
+              Ready in {{ recipe.readyInMinutes }} minutes
+              <b-icon icon="alarm-fill" variant="info"></b-icon>
             </div>
-            Ingredients:
-            <ul>
-              <li
-                v-for="(r, index) in recipe.extendedIngredients"
-                :key="index + '_' + r.id"
-              >
-                {{ r.original }}
-              </li>
-            </ul>
-          </div>
-          <div class="wrapped">
-            Instructions:
-            <ol>
-              <li v-for="s in recipe._instructions" :key="s.number">
-                {{ s.step }}
-              </li>
-            </ol>
-          </div>
-        </div>
+            <div>Likes: {{ recipe.aggregateLikes }} likes
+              <b-icon icon="suit-heart-fill" variant="info"></b-icon>
+            </div>
+          </template>
+
+          <hr class="my-4">
+
+          <b-card bg-variant="dark" text-variant="white" title="Instructions:">
+            <b-card-text>
+              {{ recipe.instructions }}
+            </b-card-text>
+          </b-card>
+
+        </b-jumbotron>
       </div>
     </div>
   </div>
@@ -87,19 +66,8 @@ export default {
   async created() {
     try {
       let response;
-      // response = this.$route.params.response;
-
       try {
-        // response = await this.axios.get(
-        //   this.$root.store.server_domain + "/recipes/" + this.$route.params.recipeId,
-        //   {
-        //     withCredentials: true
-        //   }
-        // );
-
         response = mockGetRecipeFullDetails(this.$route.params.recipeId);
-
-        // console.log("response.status", response.status);
         if (response.status !== 200) this.$router.replace("/NotFound");
       } catch (error) {
         console.log("error.response.status", error.response.status);
@@ -144,21 +112,10 @@ export default {
 </script>
 
 <style scoped>
-.wrapper {
-  display: flex;
-}
-.wrapped {
-  width: 50%;
-}
 .center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
   width: 50%;
+  max-width: 300px; /* Adjust as needed */
 }
-/* .recipe-header{
-
-} */
 
 .favorite-icon,
 .vegan,
