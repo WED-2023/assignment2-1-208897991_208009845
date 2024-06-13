@@ -2,10 +2,11 @@
   <b-container>
     <h3>
       {{ title }}:
+      {{ DisplayColumns }}
       <slot></slot>
     </h3>
-    <b-row>
-      <b-col v-for="r in recipes" :key="r.id">
+    <b-row :cols="DisplayColumns" class="custom-row">
+      <b-col v-for="r in recipes" :key="r.id" class="custom-col">
         <RecipePreview class="recipePreview" :recipe="r" />
       </b-col>
     </b-row>
@@ -15,6 +16,7 @@
 <script>
 import RecipePreview from "./RecipePreview.vue";
 import { mockGetRecipesPreview } from "../services/recipes.js";
+
 export default {
   name: "RecipePreviewList",
   components: {
@@ -24,25 +26,40 @@ export default {
     title: {
       type: String,
       required: true
+    },
+    amount:{
+      type: Number,
+      required: true
+    },
+    columns:{
+      type: Number,
+      required: false
     }
   },
+  
   data() {
     return {
-      recipes: []
+      recipes: [],
+      DisplayColumns: 0
     };
   },
   mounted() {
     this.updateRecipes();
+    this.CalculateColumns();
   },
   methods: {
+    CalculateColumns(){
+      console.log("hi")
+      if (this.columns > 0) {
+        this.DisplayColumns = this.columns
+      }
+    },
     async updateRecipes() {
       try {
         // const response = await this.axios.get(
         //   this.$root.store.server_domain + "/recipes/random",
         // );
-
-        const amountToFetch = 3; // Set this to how many recipes you want to fetch
-        const response = mockGetRecipesPreview(amountToFetch);
+        const response = mockGetRecipesPreview(this.amount);
 
 
         console.log(response);
@@ -59,7 +76,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
-  min-height: 400px;
+.custom-row {
+  row-gap: 50px; /* Adjust this value to increase the spacing between rows */
 }
+
 </style>
