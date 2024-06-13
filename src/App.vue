@@ -14,6 +14,7 @@
       </span>
       <span v-else>
          <b-button @click="toggleModal">Add New Recipe</b-button>
+          
         <b-dropdown id="dropdown-left" text="Personal Info" variant="primary" class="m-2">
         <b-dropdown-item href="#"><router-link :to="{ name: 'favorites' }">Favorites</router-link></b-dropdown-item>
         <b-dropdown-item href="#"><router-link :to="{ name: 'myrecipes' }">My Recipes</router-link></b-dropdown-item>
