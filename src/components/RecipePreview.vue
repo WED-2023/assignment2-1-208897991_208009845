@@ -39,12 +39,10 @@
           <span v-if="recipe.vegan"><img src="https://uxwing.com/wp-content/themes/uxwing/download/food-and-drinks/vegan-icon.png" class="vegan" /></span>
           <span v-if="recipe.glutenFree"><img src="https://cdn-icons-png.flaticon.com/512/4337/4337722.png" class="glutenFree" /></span>
 
-          <div class="btn-group-toggle">
-            <label class="btn btn-secondary active custom-label" style="background-color: transparent;">
-              <input type="checkbox" v-model="isFavorite" @change="toggleFavorite" class="custom-checkbox">
-              <img :src="favoriteImage" alt="Favorite" class="favorite-icon">
-            </label>
-          </div>
+          <label style="background-color: transparent;">
+            <input type="checkbox" v-model="isFavorite" @change="toggleFavorite" class="custom-checkbox">
+            <img :src="favoriteImage" alt="Favorite" class="favorite-icon">
+          </label>
         </div>
       </template>
     </b-card>
@@ -52,6 +50,9 @@
 </template>
 
 <script>
+import mockAddFavorite from "../services/user.js"
+import mockRemoveFavorite from "../services/user.js"
+
 export default {
   // mounted() {
   //   this.axios.get(this.recipe.image).then((i) => {
@@ -117,21 +118,17 @@ export default {
       }
     },
 
-    toggleFavorite() {
+    toggleFavorite(recipeId) {
       this.isFavorite = !this.isFavorite;
       if (this.isFavorite) {
-        this.addToFavorites();
+        this.addToFavorites(recipeId)
       } else {
-        this.removeFromFavorites();
+        this.removeFromFavorites(recipeId);
       }
     },
 
-    addToFavorites() {
-      let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-      if (!favorites.some(r => r.id === this.recipe.id)) {
-        favorites.push(this.recipe);
-        localStorage.setItem('favorites', JSON.stringify(favorites));
-      }
+    addToFavorites(recipeId) {
+      mockAddFavorite(recipeId);
     },
 
     removeFromFavorites() {
@@ -182,26 +179,11 @@ export default {
 }
 
 .custom-checkbox {
-  position: absolute; /* Position off-screen */
   opacity: 0; /* Make it invisible */
   width: 0;
   height: 0;
-  pointer-events: none; /* Disable click events */
 }
 
-.custom-label {
-  display: inline-flex; /* Align items in a row */
-  align-items: center; /* Center vertically */
-  justify-content: center; /* Center horizontally */
-  border: none; /* Remove any borders */
-  padding: 0.5rem; /* Padding for better clickability */
-  cursor: pointer; /* Change cursor to pointer */
-  background-color: transparent; /* Remove any background color */
-}
-
-.custom-label.active {
-  background-color: transparent; /* Maintain no background */
-}
 
 .favorite-icon,
 .vegan,

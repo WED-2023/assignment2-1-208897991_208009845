@@ -35,10 +35,12 @@
               rows="3"
             ></b-form-textarea>
           </b-form-group>
-  
-          <b-button type="submit" variant="primary">Add Recipe</b-button>
-          <b-button variant="secondary" @click="toggleModal">Cancel</b-button>
         </b-form>
+        <template #modal-footer="{ cancel }">
+            <b-button variant="danger" @click="cancel()">Cancel</b-button>
+            <b-button variant="secondary" @click="resetForm">Clear Form</b-button>
+            <b-button variant="success" @click="submitForm">OK</b-button>
+        </template>
       </b-modal>
     </div>
   </template>
@@ -60,7 +62,6 @@ export default {
   },
   methods: {
     toggleModal() {
-
       this.showModal = !this.showModal;
     },
     resetForm() {

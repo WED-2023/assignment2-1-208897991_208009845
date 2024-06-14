@@ -199,7 +199,7 @@
   
           const response = mockRegister(userDetails);
   
-          this.$router.push("/login");
+          this.$router.push("/loginpage");
           // console.log(response);
         } catch (err) {
           console.log(err.response);
