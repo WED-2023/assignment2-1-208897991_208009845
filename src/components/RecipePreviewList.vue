@@ -61,10 +61,9 @@ export default {
         // const response = await this.axios.get(
         //   this.$root.store.server_domain + "/recipes/random",
         // );
-
         if (!response)
           response = mockGetRecipesPreview(this.amount, this.offset);
-
+        
         console.log(response);
         const recipes = response.data.recipes;
         console.log(recipes);
