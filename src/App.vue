@@ -6,16 +6,11 @@
 </template>
 
 <script>
-
-import MainPage from './pages/MainPage.vue'; 
 import Navbar from './components/Navbar.vue';
-import OldNavbar from './components/OldNavbar.vue';
 
 export default {
   name: "App",
   components:{
-    MainPage,
-    OldNavbar,
     Navbar
   },
 }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <login/>
   </div>
 </template>
@@ -9,11 +9,13 @@ import Login from '../components/Login.vue';
 
   export default {
     name: 'loginpage',
-  components: { Login }
+    components: { Login }
 
   }
 </script>
 
 <style lang="scss" scoped>
-
+.container{
+  margin-top: 10rem;
+}
 </style>

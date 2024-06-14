@@ -8,20 +8,15 @@ const routes = [
     component: Main,
   },
   {
-    path: "/register",
-    name: "register",
+    path: "/registerpage",
+    name: "registerpage",
     component: () => import("./pages/RegisterPage"),
   },
   {
-    path: "/login",
-    name: "login",
+    path: "/loginpage",
+    name: "loginpage",
     component: () => import("./pages/LoginPage"),
   },
-  {
-  path: "/loginpage",
-  name: "loginpage",
-  component: () => import("./pages/LoginPage"),
-},
   {
     path: "/about",
     name: "about",
