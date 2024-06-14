@@ -1,8 +1,8 @@
 <template>
+  <div class="container">
   <b-container>
     <h3>
       {{ title }}:
-      {{ DisplayColumns }}
       <slot></slot>
     </h3>
     <b-row :cols="DisplayColumns" class="custom-row">
@@ -11,6 +11,7 @@
       </b-col>
     </b-row>
   </b-container>
+  </div>
 </template>
 
 <script>
@@ -34,33 +35,34 @@ export default {
     columns:{
       type: Number,
       required: false
+    },
+    response:{
+      require:false
     }
   },
   
   data() {
     return {
       recipes: [],
-      DisplayColumns: 0
+      DisplayColumns: 0,
+      offset: 0
     };
   },
   mounted() {
-    this.updateRecipes();
-    this.CalculateColumns();
+    this.updateRecipes(this.response);
   },
   methods: {
-    CalculateColumns(){
-      console.log("hi")
-      if (this.columns > 0) {
-        this.DisplayColumns = this.columns
-      }
+    IncreaseOffset(increaseValue = 3){
+      this.offset = this.offset + increaseValue
+      this.updateRecipes()
     },
-    async updateRecipes() {
+    async updateRecipes(response=null) {
       try {
         // const response = await this.axios.get(
         //   this.$root.store.server_domain + "/recipes/random",
         // );
-        const response = mockGetRecipesPreview(this.amount);
-
+        if (!response)
+          response = mockGetRecipesPreview(this.amount, this.offset);
 
         console.log(response);
         const recipes = response.data.recipes;
@@ -70,12 +72,22 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    getRecipesFromApi(response){
+        this.recipes = []
+        this.recipes.push(...response)
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.container{
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+  align-items: center;
+}
 .custom-row {
   row-gap: 50px; /* Adjust this value to increase the spacing between rows */
 }

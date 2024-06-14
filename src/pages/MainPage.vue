@@ -1,36 +1,32 @@
 <template>
-  <div class="container">
-    <h1 class="title">Main Page</h1>
-    <RecipePreviewList ref="listOfRecipes" :columns=2 :amount=4 title="Random Recipes" class="RandomRecipes center" />
-    <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
-    <div>
-     <b-button @click="generateRandomRecipes" block variant="primary">Generate More Recipes</b-button>
+  
+  <div class="page">
+    <div class="container">
+        <div class="left">
+          <RecipePreviewList ref="listOfRecipes" :columns=2 :amount=4 title="Explore these recipes" class="RandomRecipes center" />
+          <div class="generate-wrapper">
+            <b-button @click="generateRandomRecipes" variant="primary" block class="generate">Generate More Recipes</b-button>
+          </div>
+        </div>
+        <div class="right"> 
+          
+          <span v-if="!$root.store.username" class="login">
+            <div class="login">
+              <Login/>
+            </div>
+          </span>
+          <span v-else> 
+            <RecipePreviewList title="Last Viewed Recipes" :columns=2 :amount=4 class="RandomRecipes" />
+          </span>
+        </div>
     </div>
-    <!-- <RecipePreviewList
-      title="Last Viewed Recipes"
-      :class="{
-        RandomRecipes: true,
-        blur: !$root.store.username,
-        center: true
-      }"
-      disabled> </RecipePreviewList> -->
-      <div>
-      <span v-if="!$root.store.username"><Login/></span>
-      <span v-else> 
-      <!-- <RecipePreviewList title="Last Viewed Recipes" :amount=3 class="RandomRecipes" disabled/> -->
-      </span>
-       </div>
-    <!-- <div
-      style="position: absolute;top: 70%;left: 50%;transform: translate(-50%, -50%);"
-    >
-      Centeredasdasdad
-    </div>-->
   </div>
 </template>
 
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
 import Login from '../components/Login.vue';
+
 export default {
   components: {
     RecipePreviewList,
@@ -38,22 +34,25 @@ export default {
   },
   methods:{
     generateRandomRecipes(){
-      this.$refs.listOfRecipes.updateRecipes();
-    }
+      this.$refs.listOfRecipes.IncreaseOffset(4)
+    },
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.RandomRecipes {
-  margin: 10px 0 10px;
+  
+<style >
+.page{
+  margin-right: 30rem;
+  margin-top: 1rem;
 }
-.blur {
-  -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
-  filter: blur(2px);
+.container {
+  display: flex;
+  flex-direction: row;
 }
-::v-deep .blur .recipe-preview {
-  pointer-events: none;
-  cursor: default;
+.login{
+  margin-top: 25rem;
+}
+.generate {
+  margin-top: 2rem;
 }
 </style>

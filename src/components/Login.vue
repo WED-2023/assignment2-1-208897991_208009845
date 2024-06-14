@@ -135,6 +135,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .container {
-  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  width: 500px;
 }
 </style>
