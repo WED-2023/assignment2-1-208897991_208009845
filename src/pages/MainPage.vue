@@ -26,7 +26,7 @@
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
 import Login from '../components/Login.vue';
-
+ 
 export default {
   components: {
     RecipePreviewList,
