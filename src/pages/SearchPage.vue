@@ -37,15 +37,20 @@
       </b-form-group>
       
       <h3>Search Results:</h3>
+      <!-- <RecipePreviewList ref="listOfRecipes" class="RandomRecipes center" /> -->
+
       <b-row>
         <b-col v-for="recipe in sortedRecipes" :key="recipe.id" cols="12" md="4">
-          <b-card :title="recipe.title" :img-src="recipe.image" img-alt="Recipe Image" img-top @click="viewRecipe(recipe.id)">
+          <b-link :to="{ name: 'recipe', params: { recipeId: recipe.id }}">
+          
+          <b-card :title="recipe.title" :img-src="recipe.image" img-alt="Recipe Image" img-top @click="viewRecipe(recipe.id)" >
             <b-card-text>
               Ready in {{ recipe.readyInMinutes }} minutes<br>
               Likes: {{ recipe.aggregateLikes }}
             </b-card-text>
             <b-button @click="viewRecipe(recipe.id)" variant="info">View Recipe</b-button>
           </b-card>
+          </b-link>
         </b-col>
       </b-row>
     </div>
@@ -61,7 +66,7 @@
 
 <script>
 import axios from 'axios';
-
+import RecipePreviewList from "../components/RecipePreviewList";
 export default {
   data() {
     return {
@@ -95,6 +100,9 @@ export default {
       return this.recipes;
     }
   },
+  //   components: {
+  //   RecipePreviewList,
+  // },
   methods: {
     async searchRecipes() {
       const apiKey = '0d0cd3fd33f045e884781cc1c28244ce';  // Replace with your Spoonacular API key
@@ -112,7 +120,11 @@ export default {
       } catch (error) {
         console.error('Error fetching recipes:', error);
       }
+      
     },
+    //     generateRandomRecipes(){
+    //   this.$refs.listOfRecipes.updateRecipes();
+    // },
     viewRecipe(recipeId) {
       // Implement logic to view recipe details
       this.$router.push({ name: 'RecipeDetail', params: { id: recipeId } });
