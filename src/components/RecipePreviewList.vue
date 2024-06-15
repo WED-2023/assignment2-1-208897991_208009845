@@ -5,7 +5,7 @@
       {{ title }}:
       <slot></slot>
     </h3>
-    <b-row :cols="DisplayColumns" class="custom-row">
+    <b-row :cols="columns" class="custom-row">
       <b-col v-for="r in recipes" :key="r.id" class="custom-col">
         <RecipePreview class="recipePreview" :recipe="r" />
       </b-col>
@@ -34,7 +34,8 @@ export default {
     },
     columns:{
       type: Number,
-      required: false
+      required: false,
+      default: 3  
     },
     response:{
       require:false
@@ -53,7 +54,7 @@ export default {
   },
   methods: {
     IncreaseOffset(increaseValue = 3){
-      this.offset = this.offset + increaseValue
+      this.offset += increaseValue
       this.updateRecipes()
     },
     async updateRecipes(response=null) {

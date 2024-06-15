@@ -1,33 +1,34 @@
 <template>
     <div>
-        <h1>My Recipes Page</h1>
-        
-        <div v-for="recipe in recipes" :key="recipe.id" class="recipeItem">
-            <h2>{{recipe.title}}</h2>
-            <h3>{{recipe.summary}}</h3>
-        </div>
+      <RecipePreviewList :recipes="recipes" :columns=2 :amount=4 title="My Recipes" class="Recipes center" />
     </div>
-</template>
-
-<script>
-export default {
+  </template>
+  
+  <script>
+  import RecipePreviewList from "../components/RecipePreviewList";
+  import { mockGetUserRecipes } from "../services/user.js";
+  
+  export default {
     name: 'myrecipes',
+    components: {
+      RecipePreviewList,
+    },
     data() {
-        return {
-            recipes: []
-        };
+      return {
+        recipes: []
+      };
     },
     mounted() {
-        this.recipeLoaded();
+      this.updateRecipes();
     },
     methods: {
-        recipeLoaded() {
-            let storageOfRecipes = localStorage.getItem('myRecipes');
-            this.recipes = storageOfRecipes ? JSON.parse(storageOfRecipes) : [];
-        }
+      async updateRecipes() {
+        this.recipes = mockGetUserRecipes().response.data.recipes;
+      },
     }
-}
-</script>
-
-<style lang="scss" scoped>
-</style>
+  };
+  </script>
+  
+  <style lang="scss" scoped>
+  </style>
+  

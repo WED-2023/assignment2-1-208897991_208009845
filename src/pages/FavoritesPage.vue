@@ -1,7 +1,6 @@
 <template>
   <div>
-
-    <RecipePreviewList :recipes="recipes" :columns="2" :amount="4" title="Favorites" class="Recipes center" />
+    <RecipePreviewList :recipes="recipes" :columns=2 :amount=4 title="Favorites" class="Recipes center" />
   </div>
 </template>
 
@@ -24,8 +23,7 @@ export default {
   },
   methods: {
     async updateRecipes() {
-      const response = mockGetFavorites();
-      this.recipes = response.data.recipes;
+      this.recipes = mockGetFavorites().response.data.recipes;
     },
   }
 };
