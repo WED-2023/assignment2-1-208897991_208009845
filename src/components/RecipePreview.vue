@@ -34,7 +34,7 @@
 
       <template #footer>
         <div class="footer-icons">
-          <b-icon v-if="checkIfViewed(recipe.id)" icon="eye" class="viewed-icon"></b-icon>
+          <b-icon v-if="checkIfViewed" icon="eye" class="viewed-icon"></b-icon>
           <span :to="{ name: 'recipe', params: { recipeId: recipe.id } }" v-if="recipe.vegetarian"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Vegetarian-mark.svg/1200px-Vegetarian-mark.svg.png" class="vegi" /></span>
           <span v-if="recipe.vegan"><img src="https://uxwing.com/wp-content/themes/uxwing/download/food-and-drinks/vegan-icon.png" class="vegan" /></span>
           <span v-if="recipe.glutenFree"><img src="https://cdn-icons-png.flaticon.com/512/4337/4337722.png" class="glutenFree" /></span>
@@ -83,6 +83,8 @@ export default {
     checkIfViewed() {
       let viewedRecipes = JSON.parse(localStorage.getItem('viewedRecipes')) || [];
       return viewedRecipes.includes(this.recipe.id);
+      
+
     },
 
     markAsViewed() {
