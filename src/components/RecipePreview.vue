@@ -1,5 +1,5 @@
 <template>
-  <div class="card-container" :to="{ name:'recipe', params: { recipeId: recipe.id }}" @change="markAsViewed"> 
+  <div class="card-container"> 
     <b-card
       :to="{ name:'recipe', params: { recipeId: recipe.id } }"
       img-alt="Image"
@@ -38,9 +38,10 @@
           <span :to="{ name: 'recipe', params: { recipeId: recipe.id } }" v-if="recipe.vegetarian"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Vegetarian-mark.svg/1200px-Vegetarian-mark.svg.png" class="vegi" /></span>
           <span v-if="recipe.vegan"><img src="https://uxwing.com/wp-content/themes/uxwing/download/food-and-drinks/vegan-icon.png" class="vegan" /></span>
           <span v-if="recipe.glutenFree"><img src="https://cdn-icons-png.flaticon.com/512/4337/4337722.png" class="glutenFree" /></span>
+          
 
           <label style="background-color: transparent;">
-            <input type="checkbox" v-model="isFavorite" @change="toggleFavorite" class="custom-checkbox">
+            <input type="checkbox" @change="toggleFavorite" class="custom-checkbox"> 
             <img :src="favoriteImage" alt="Favorite" class="favorite-icon">
           </label>
         </div>
@@ -50,8 +51,7 @@
 </template>
 
 <script>
-import mockAddFavorite from "../services/user.js"
-import mockRemoveFavorite from "../services/user.js"
+import { mockAddFavorite, mockDeleteFavorite } from "../services/user.js";
 
 export default {
   // mounted() {
@@ -62,8 +62,8 @@ export default {
   data() {
     return {
       image_load: true,
-      isFavorite: this.getFavoriteState(this.recipe),
-      isViewed: this.checkIfViewed(this.recipe.id)
+      isFavorite: false,
+      isViewed: false
     };
   },
 
@@ -73,84 +73,66 @@ export default {
       type: Object,
       required: true
     },
-
-    // id: {
-    //   type: Number,
-    //   required: true
-    // },
-    // title: {
-    //   type: String,
-    //   required: true
-    // },
-    // readyInMinutes: {
-    //   type: Number,
-    //   required: true
-    // },
-    // image: {
-    //   type: String,
-    //   required: true
-    // },
-    // aggregateLikes: {
-    //   type: Number,
-    //   required: false,
-    //   default() {
-    //     return undefined;
-    //   }
-    // }
   },
-    computed: {
+  computed: {
     favoriteImage() {
       return this.isFavorite ? require('@/assets/favorite-icon.png') : require('@/assets/not-favorite-icon.png');
     }
   },
   methods: {
-    checkIfViewed(recipeId) {
+    checkIfViewed() {
       let viewedRecipes = JSON.parse(localStorage.getItem('viewedRecipes')) || [];
-      return viewedRecipes.includes(recipeId);
+      return viewedRecipes.includes(this.recipe.id);
     },
 
     markAsViewed() {
+      alert('markAsViewed')
       let viewedRecipes = JSON.parse(localStorage.getItem('viewedRecipes')) || [];
       if (!viewedRecipes.includes(this.recipe.id)) {
+        alert('inside')
         viewedRecipes.push(this.recipe.id);
         localStorage.setItem('viewedRecipes', JSON.stringify(viewedRecipes));
         this.isViewed = true; 
       }
     },
 
-    toggleFavorite(recipeId) {
+    toggleFavorite() {
       this.isFavorite = !this.isFavorite;
-      if (this.isFavorite) {
-        this.addToFavorites(recipeId)
-      } else {
-        this.removeFromFavorites(recipeId);
+      const action = this.isFavorite ? mockAddFavorite : mockDeleteFavorite;
+
+      try {
+        const serverResponse = action(this.recipe.id);
+
+        const { status, response: { data } } = serverResponse;
+
+        if (status === 200 && data.success) {
+          console.log(data.message);
+          this.showToast(data.message, 'Success', 'success');
+        } else {
+          this.handleError(serverResponse);
+        }
+      } catch (error) {
+        this.handleError(error);
       }
     },
 
-    addToFavorites(recipeId) {
-      mockAddFavorite(recipeId);
+    showToast(message, title, variant) {
+      this.$bvToast.toast(message, {
+        title,
+        variant,
+        solid: true
+      });
     },
 
-    removeFromFavorites() {
-      let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-      let index = favorites.findIndex(r => r.id === this.recipe.id);
-      if (index !== -1) {
-        favorites.splice(index, 1);
-        localStorage.setItem('favorites', JSON.stringify(favorites));
-      }
+    handleError(error) {
+      console.error('Error updating favorite status:', error);
+      this.showToast('Error updating favorite status', 'Error', 'danger');
     },
-
-    getFavoriteState(recipe) {
-      let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-      return favorites.some(r => r.id === recipe.id);
-    }
   },
-    created() {
-    this.isFavorite = this.getFavoriteState(this.recipe);
+  created() {
     this.isViewed = this.checkIfViewed(this.recipe.id);
   },
   updated() {
-    this.isFavorite = this.getFavoriteState(this.recipe);
     this.isViewed = this.checkIfViewed(this.recipe.id);
   }
 };
@@ -184,13 +166,16 @@ export default {
   height: 0;
 }
 
-
-.favorite-icon,
 .vegan,
 .glutenFree,
 .vegi {
   width: 30px;
   height: auto;
-  margin-right: 5px;
+}
+.favorite-icon
+{
+  width: 30px;
+  height: auto;
+  margin-top: 5px;
 }
 </style>

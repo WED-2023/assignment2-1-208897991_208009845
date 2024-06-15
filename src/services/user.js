@@ -18,5 +18,8 @@ export function mockGetUserRecipes() {
 export function mockAddUserRecipe(recipeDetails) {
   return { status: 200, response: { data: { message: "The Recipe successfully added to My Recipes", success: true}} };
 }
+export function mockGetFamilyRecipe(recipeId) {
+  return { status: 200, response: { data: { recipes: recipe_preview } } };
+}
   
   
