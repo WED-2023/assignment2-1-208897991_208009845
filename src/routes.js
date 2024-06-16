@@ -13,8 +13,8 @@ const routes = [
     component: () => import("./pages/RegisterPage"),
   },
   {
-    path: "/loginpage",
-    name: "loginpage",
+    path: "/loginPage",
+    name: "loginPage",
     component: () => import("./pages/LoginPage"),
   },
   {
@@ -23,14 +23,9 @@ const routes = [
     component: () => import("./pages/AboutPage"),
   },
   {
-    path: "/search",
-    name: "search",
+    path: "/searchPage",
+    name: "searchPage",
     component: () => import("./pages/SearchPage"),
-  },
-  {
-    path: "/searchPageNew",
-    name: "searchPageNew",
-    component: () => import("./pages/SearchPageNew"),
   },
   {
     path: "/RecipeViewPage/:recipeId",
@@ -38,12 +33,12 @@ const routes = [
     component: () => import("./pages/RecipeViewPage"),
   },
   {
-    path: "/FavoritesPage",
-    name: "favorites",
+    path: "/favoritesPage",
+    name: "favoritesPage",
     component: () => import("./pages/FavoritesPage"),
   },
   {
-    path: "/MyRecipesPage",
+    path: "/myRecipesPage",
     name: "myrecipes",
     component: () => import("./pages/MyRecipesPage"),
   },
@@ -53,13 +48,13 @@ const routes = [
     component: () => import("./pages/FamilyRecipesPage"),
   },
   {
-    path: "/RecipePreparingPage/:recipeId",
-    name: "RecipePlanning",
+    path: "/recipePreparingPage/:recipeId",
+    name: "recipePlanning",
     component: () => import("./pages/RecipePreparingPage"),
   },
   {
-    path: "/MealPlanningPage",
-    name: "MealPlanning",
+    path: "/mealPlanningPage",
+    name: "mealPlanning",
     component: () => import("./pages/MealPlanningPage"),
   },
   {

@@ -7,7 +7,7 @@
             <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav>
                 <b-nav-item :to="{ name: 'main' }" >Recipes</b-nav-item>
-                <b-nav-item :to="{ name: 'search'}">Search</b-nav-item>
+                <b-nav-item :to="{ name: 'searchPage'}">Search</b-nav-item>
                 <b-nav-item :to="{ name: 'about'}">About</b-nav-item>
                 <b-nav-item-dropdown v-if="$root.store.username" text="Personal">
                     <b-dropdown-item :to="{ name: 'favorites'}">My Favorite Recipes</b-dropdown-item>
