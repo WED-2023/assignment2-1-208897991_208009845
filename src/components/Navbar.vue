@@ -1,6 +1,6 @@
 <template>
     <div id="nav">
-        <b-navbar toggleable="lg" type="dark" variant="info">
+        <b-navbar toggleable="lg" type="dark" variant="dark">
             <b-navbar-brand :to="{ name: 'MainPage' }">Cristina</b-navbar-brand>
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 

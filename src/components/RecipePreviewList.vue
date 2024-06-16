@@ -84,5 +84,4 @@ export default {
 .custom-row {
   row-gap: 50px; /* Adjust this value to increase the spacing between rows */
 }
-
 </style>
