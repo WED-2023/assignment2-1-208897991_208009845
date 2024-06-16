@@ -1,5 +1,6 @@
 <template>
   <div class="card-container"> 
+    
     <b-card
       :to="{ name:'recipe', params: { recipeId: recipe.id } }"
       img-alt="Image"
@@ -8,22 +9,16 @@
       class="mb-1 card"
     >
       <template #header>
-          <router-link
-          :to="{ name: 'recipe', params: { recipeId: recipe.id }}"
-          class="text-dark header"
-          @click="test">
-          {{ recipe.title }} 
-          </router-link>
+        <b-link :to="{ name:'recipe', params: { recipeId: recipe.id } }"><button @click="markAsViewed" class="text-dark invisible-button">{{ recipe.title }}</button></b-link>
       </template>
 
-      <b-link
-      :to="{ name: 'recipe', params: { recipeId: recipe.id }}" 
-      @click="markAsViewed">
+      <b-link :to="{ name:'recipe', params: { recipeId: recipe.id } }">
           <b-card-img 
             :src="recipe.image"
             alt="Image"
             top
             class="card-image"
+            @click="markAsViewed"
           ></b-card-img>
         </b-link>
 
@@ -80,16 +75,12 @@ export default {
     }
   },
   methods: {
-    test(){
-      console.log("test")
-      alert("test")
-    },
     checkIfViewed() {
+      
       let viewedRecipes = JSON.parse(localStorage.getItem('viewedRecipes')) || [];
       return viewedRecipes.includes(this.recipe.id);
     },
     markAsViewed() {
-      alert('markAsViewed')
       let viewedRecipes = JSON.parse(localStorage.getItem('viewedRecipes')) || [];
       if (!viewedRecipes.includes(this.recipe.id)) {
         viewedRecipes.push(this.recipe.id);
@@ -141,10 +132,6 @@ export default {
 </script>
 
 <style scoped>
-.header { /* header text */
-  font-size: 1rem;
-  font-weight: bold;
-}
 
 .footer-icons {
   display: flex;
@@ -168,6 +155,15 @@ export default {
   height: 0;
 }
 
+.invisible-button {
+  background-color: transparent; /* Makes button background invisible */
+  border: none; /* Removes button border */
+  padding: 0; /* Removes button padding (optional) */
+  color: inherit; /* Inherits text color from parent */
+  font-weight: bold;
+  font-size: 1rem;
+  
+}
 .vegan,
 .glutenFree,
 .vegi {
