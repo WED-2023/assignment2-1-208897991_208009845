@@ -28,7 +28,7 @@ import RecipePreviewList from "../components/RecipePreviewList";
 import Login from '../components/Login.vue';
  
 export default {
-  name: 'mainpage',
+  name: 'MainPage',
   components: {
     RecipePreviewList,
     Login

@@ -1,18 +1,18 @@
 <template>
     <div id="nav">
         <b-navbar toggleable="lg" type="dark" variant="info">
-            <b-navbar-brand :to="{ name: 'main' }">Cristina</b-navbar-brand>
+            <b-navbar-brand :to="{ name: 'MainPage' }">Cristina</b-navbar-brand>
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
             <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav>
-                <b-nav-item :to="{ name: 'main' }" >Recipes</b-nav-item>
-                <b-nav-item :to="{ name: 'searchPage'}">Search</b-nav-item>
-                <b-nav-item :to="{ name: 'about'}">About</b-nav-item>
+                <b-nav-item :to="{ name: 'MainPage' }" >Recipes</b-nav-item>
+                <b-nav-item :to="{ name: 'SearchPage'}">Search</b-nav-item>
+                <b-nav-item :to="{ name: 'AboutPage'}">About</b-nav-item>
                 <b-nav-item-dropdown v-if="$root.store.username" text="Personal">
-                    <b-dropdown-item :to="{ name: 'favorites'}">My Favorite Recipes</b-dropdown-item>
-                    <b-dropdown-item :to="{ name: 'myrecipes'}">My Recipes</b-dropdown-item>
-                    <b-dropdown-item :to="{ name: 'familyRecipesPage'}">Family Recipes</b-dropdown-item>
+                    <b-dropdown-item :to="{ name: 'FavoritesPage'}">My Favorite Recipes</b-dropdown-item>
+                    <b-dropdown-item :to="{ name: 'MyRecipesPage'}">My Recipes</b-dropdown-item>
+                    <b-dropdown-item :to="{ name: 'FamilyRecipesPage'}">Family Recipes</b-dropdown-item>
                 </b-nav-item-dropdown>
                 
                 <b-nav-item v-if="$root.store.username" @click="toggleModal">Add New Recipe</b-nav-item>
@@ -23,8 +23,8 @@
             <!-- user not logged in -->
             <b-navbar-nav class="ml-auto" v-if="!$root.store.username">
                 <b-nav-text>Hello Guest</b-nav-text>
-                <b-nav-item :to="{ name: 'registerpage'}">Register</b-nav-item>
-                <b-nav-item :to="{ name: 'loginpage'}">Login</b-nav-item>
+                <b-nav-item :to="{ name: 'RegisterPage'}">Register</b-nav-item>
+                <b-nav-item :to="{ name: 'LoginPage'}">Login</b-nav-item>
             </b-navbar-nav>
 
             <!-- user logged in -->

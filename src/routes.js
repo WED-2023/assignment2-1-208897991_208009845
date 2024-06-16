@@ -4,27 +4,27 @@ import NotFound from "./pages/NotFoundPage";
 const routes = [
   {
     path: "/",
-    name: "main",
+    name: "MainPage",
     component: Main,
   },
   {
-    path: "/registerpage",
-    name: "registerpage",
+    path: "/RegisterPage",
+    name: "RegisterPage",
     component: () => import("./pages/RegisterPage"),
   },
   {
-    path: "/loginPage",
-    name: "loginPage",
+    path: "/LoginPage",
+    name: "LoginPage",
     component: () => import("./pages/LoginPage"),
   },
   {
-    path: "/about",
-    name: "about",
+    path: "/AboutPage",
+    name: "AboutPage",
     component: () => import("./pages/AboutPage"),
   },
   {
-    path: "/searchPage",
-    name: "searchPage",
+    path: "/SearchPage",
+    name: "SearchPage",
     component: () => import("./pages/SearchPage"),
   },
   {
@@ -33,18 +33,18 @@ const routes = [
     component: () => import("./pages/RecipeViewPage"),
   },
   {
-    path: "/favoritesPage",
-    name: "favoritesPage",
+    path: "/FavoritesPage",
+    name: "FavoritesPage",
     component: () => import("./pages/FavoritesPage"),
   },
   {
-    path: "/myRecipesPage",
-    name: "myrecipes",
+    path: "/MyRecipesPage",
+    name: "MyRecipesPage",
     component: () => import("./pages/MyRecipesPage"),
   },
   {
     path: "/FamilyRecipesPage",
-    name: "familyRecipesPage",
+    name: "FamilyRecipesPage",
     component: () => import("./pages/FamilyRecipesPage"),
   },
   {

@@ -8,7 +8,7 @@
 import Register from '../components/Register.vue';
 
   export default {
-    name: 'registerpage',
+    name: 'RegisterPage',
     components: { Register }
   }
 </script>

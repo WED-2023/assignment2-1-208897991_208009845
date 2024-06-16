@@ -37,7 +37,7 @@
       </b-form-group>
       
     
-      <RecipePreviewList title="Search Results" :recipes="sortedRecipes" :amount="numberOfResults" :columns="3" />
+      <RecipePreviewList title="Search Results" :recipes="sortedRecipes" :amount="numberOfResults" :columns="2" />
 
       
     </div>
@@ -55,6 +55,7 @@
 import axios from 'axios';
 import RecipePreviewList from "../components/RecipePreviewList";
 export default {
+  name: 'SearchPage',
   data() {
     return {
       query: '',

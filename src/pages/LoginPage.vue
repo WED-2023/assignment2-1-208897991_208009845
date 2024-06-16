@@ -8,7 +8,7 @@
 import Login from '../components/Login.vue';
 
   export default {
-    name: 'loginPage',
+    name: 'LoginPage',
     components: { Login }
 
   }

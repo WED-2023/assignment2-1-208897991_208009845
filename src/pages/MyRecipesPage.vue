@@ -9,7 +9,7 @@
   import { mockGetUserRecipes } from "../services/user.js";
   
   export default {
-    name: 'myrecipes',
+    name: 'MyRecipesPage',
     components: {
       RecipePreviewList,
     },

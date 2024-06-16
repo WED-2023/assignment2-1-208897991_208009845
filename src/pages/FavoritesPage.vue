@@ -9,7 +9,7 @@ import RecipePreviewList from "../components/RecipePreviewList";
 import { mockGetFavorites } from "../services/user.js";
 
 export default {
-  name: 'favorites',
+  name: 'FavoritesPage',
   components: {
     RecipePreviewList,
   },

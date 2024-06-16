@@ -9,7 +9,7 @@ import RecipePreviewList from "../components/RecipePreviewList";
 import { mockGetFamilyRecipe } from "../services/user.js";
 
 export default {
-  name: 'familyRecipesPage',
+  name: 'FamilyRecipesPage',
   components: {
     RecipePreviewList,
   },

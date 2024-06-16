@@ -8,17 +8,17 @@
       class="mb-1 card"
     >
       <template #header>
-          <b-link
+          <router-link
           :to="{ name: 'recipe', params: { recipeId: recipe.id }}"
           class="text-dark header"
-          @change="markAsViewed">
+          @click="test">
           {{ recipe.title }} 
-          </b-link>
+          </router-link>
       </template>
 
       <b-link
       :to="{ name: 'recipe', params: { recipeId: recipe.id }}" 
-      @change="markAsViewed">
+      @click="markAsViewed">
           <b-card-img 
             :src="recipe.image"
             alt="Image"
@@ -34,7 +34,7 @@
 
       <template #footer>
         <div class="footer-icons">
-          <b-icon v-if="checkIfViewed" icon="eye" class="viewed-icon"></b-icon>
+          <b-icon v-if="checkIfViewed()" icon="eye" class="viewed-icon"></b-icon>
           <span :to="{ name: 'recipe', params: { recipeId: recipe.id } }" v-if="recipe.vegetarian"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Vegetarian-mark.svg/1200px-Vegetarian-mark.svg.png" class="vegi" /></span>
           <span v-if="recipe.vegan"><img src="https://uxwing.com/wp-content/themes/uxwing/download/food-and-drinks/vegan-icon.png" class="vegan" /></span>
           <span v-if="recipe.glutenFree"><img src="https://cdn-icons-png.flaticon.com/512/4337/4337722.png" class="glutenFree" /></span>
@@ -80,14 +80,16 @@ export default {
     }
   },
   methods: {
+    test(){
+      console.log("test")
+      alert("test")
+    },
     checkIfViewed() {
       let viewedRecipes = JSON.parse(localStorage.getItem('viewedRecipes')) || [];
       return viewedRecipes.includes(this.recipe.id);
-      
-
     },
-
     markAsViewed() {
+      alert('markAsViewed')
       let viewedRecipes = JSON.parse(localStorage.getItem('viewedRecipes')) || [];
       if (!viewedRecipes.includes(this.recipe.id)) {
         viewedRecipes.push(this.recipe.id);
