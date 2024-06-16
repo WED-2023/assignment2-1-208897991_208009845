@@ -1,6 +1,7 @@
 // src/services/user.js
 import recipe_full_view from "../assets/mocks/recipe_full_view.json";
 import recipe_preview from "../assets/mocks/recipe_preview.json";
+import recipe_preview_family from "../assets/mocks/recipe_preview_famliy.json";
 
 
 export function mockAddFavorite(recipeId) {
@@ -19,7 +20,7 @@ export function mockAddUserRecipe(recipeDetails) {
   return { status: 200, response: { data: { message: "The Recipe successfully added to My Recipes", success: true}} };
 }
 export function mockGetFamilyRecipe(recipeId) {
-  return { status: 200, response: { data: { recipes: recipe_preview } } };
+  return { status: 200, response: { data: { recipes: recipe_preview_family } } };
 }
   
   

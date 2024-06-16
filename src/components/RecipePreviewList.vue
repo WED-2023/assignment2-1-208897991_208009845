@@ -37,46 +37,38 @@ export default {
       required: false,
       default: 3  
     },
-    response:{
-      require:false
+    recipes:{
+      default: null
     }
   },
-  
   data() {
     return {
-      recipes: [],
       DisplayColumns: 0,
       offset: 0
     };
   },
   mounted() {
-    this.updateRecipes(this.response);
+    if (!this.recipes) {
+      this.updateRecipes();
+    }
   },
   methods: {
     IncreaseOffset(increaseValue = 3){
       this.offset += increaseValue
       this.updateRecipes()
     },
-    async updateRecipes(response=null) {
+    async updateRecipes() {
       try {
         // const response = await this.axios.get(
         //   this.$root.store.server_domain + "/recipes/random",
         // );
-        if (!response)
-          response = mockGetRecipesPreview(this.amount, this.offset);
-        
-        console.log(response);
-        const recipes = response.data.recipes;
+        this.recipes = mockGetRecipesPreview(this.amount, this.offset).data.recipes;
         console.log(recipes);
         this.recipes = [];
         this.recipes.push(...recipes);
       } catch (error) {
         console.log(error);
       }
-    },
-    getRecipesFromApi(response){
-        this.recipes = []
-        this.recipes.push(...response)
     }
   }
 };

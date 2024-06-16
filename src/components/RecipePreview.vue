@@ -88,10 +88,8 @@ export default {
     },
 
     markAsViewed() {
-      alert('markAsViewed')
       let viewedRecipes = JSON.parse(localStorage.getItem('viewedRecipes')) || [];
       if (!viewedRecipes.includes(this.recipe.id)) {
-        alert('inside')
         viewedRecipes.push(this.recipe.id);
         localStorage.setItem('viewedRecipes', JSON.stringify(viewedRecipes));
         this.isViewed = true; 

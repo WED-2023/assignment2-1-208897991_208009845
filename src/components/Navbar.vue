@@ -12,7 +12,7 @@
                 <b-nav-item-dropdown v-if="$root.store.username" text="Personal">
                     <b-dropdown-item :to="{ name: 'favorites'}">My Favorite Recipes</b-dropdown-item>
                     <b-dropdown-item :to="{ name: 'myrecipes'}">My Recipes</b-dropdown-item>
-                    <b-dropdown-item :to="{ name: 'familyrecipes'}">Family Recipes</b-dropdown-item>
+                    <b-dropdown-item :to="{ name: 'familyRecipesPage'}">Family Recipes</b-dropdown-item>
                 </b-nav-item-dropdown>
                 
                 <b-nav-item v-if="$root.store.username" @click="toggleModal">Add New Recipe</b-nav-item>

@@ -49,7 +49,7 @@ const routes = [
   },
   {
     path: "/FamilyRecipesPage",
-    name: "familyrecipes",
+    name: "familyRecipesPage",
     component: () => import("./pages/FamilyRecipesPage"),
   },
   {

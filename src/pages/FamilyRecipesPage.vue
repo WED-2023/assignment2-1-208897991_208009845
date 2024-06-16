@@ -9,7 +9,7 @@ import RecipePreviewList from "../components/RecipePreviewList";
 import { mockGetFamilyRecipe } from "../services/user.js";
 
 export default {
-  name: 'familyracipes',
+  name: 'familyRecipesPage',
   components: {
     RecipePreviewList,
   },
@@ -22,9 +22,13 @@ export default {
     this.updateRecipes();
   },
   methods: {
-    async updateRecipes() {
-      const response = mockGetFamilyRecipe();
-      this.recipes = response.data.recipes;
+    updateRecipes() {
+      const { status, response: { data } } = mockGetFamilyRecipe();
+      if (status === 200) {
+        this.recipes = data.recipes;
+      }
+      else
+        alert("Error getting family recipes")
     },
   }
 };
