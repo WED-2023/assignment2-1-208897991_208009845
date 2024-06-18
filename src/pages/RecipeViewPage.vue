@@ -48,7 +48,7 @@
               {{ recipe.instructions }}
             </b-card-text>
           </b-card>
-
+          <b-button @click="goToMealPreparationPage" variant="primary">Go to Meal Preparation</b-button>
         </b-jumbotron>
       </div>
     </div>
@@ -106,6 +106,11 @@ export default {
       this.recipe = _recipe;
     } catch (error) {
       console.log(error);
+    }
+  },
+  methods: {
+    goToMealPreparationPage() {
+      this.$router.push({ name: 'MealPreparingPage', params: { recipeId: this.$route.params.recipeId } });
     }
   }
 };
