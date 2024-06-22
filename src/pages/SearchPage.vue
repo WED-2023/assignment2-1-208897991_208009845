@@ -37,7 +37,7 @@
       </b-form-group>
       
     
-      <RecipePreviewList title="Search Results" :recipes="sortedRecipes" :amount="numberOfResults" :columns="2" />
+      <RecipePreviewList title="Search Results" :fromAPI=true :recipes="sortedRecipes" :amount="numberOfResults" :columns="2" />
 
       
     </div>
