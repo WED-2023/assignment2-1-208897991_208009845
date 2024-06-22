@@ -1,85 +1,80 @@
+
 <template>
-  
-  <div>
-    <div class="container">
-      <h1>Recipe Preparation</h1>
+  <b-container class="h-100">
+    <div class="d-flex flex-column">
+      <h1 class="title">Recipe Preparing Page</h1>
+      <b-button style="background-color: #c8a2c8;" @click="multiplyQuantities">Multiply Quantities</b-button>
+      <b-list-group>
+        <b-list-group-item v-for="(step, index) in steps" :key="index">
+          <b-form-checkbox v-model="step.completed">
+            <h2 >step {{ step.number }}</h2>
+            {{ step.step }}
+          </b-form-checkbox>
+          <ul>
+            <li v-for="ingredient in step.ingredients" :key="ingredient.id">
+              <b-img :src="ingredient.image" :alt="ingredient.name" height="50" width="50"></b-img>
+              {{ ingredient.name }}: {{ (ingredient.amount * multiplier).toFixed(2) }} {{ ingredient.unit }}
+            </li>
+          </ul>
+        </b-list-group-item>
+      </b-list-group>
 
-    </div>
-    <div class="container">
-      <b-button variant="primary" @click="multiplyIngredients">Multiply Ingredients</b-button>
-    </div>
-  <div class="container">
-    
-
-    <b-list-group>
-      <b-list-group-item v-for="(step, index) in recipeSteps" :key="index" class="mb-3">
-        <b-form-checkbox v-model="step.completed" class="mb-2">
-          {{ step.number }}. {{ step.step }}
-        </b-form-checkbox>
-        <b-list-group>
-          <b-list-group-item v-for="ingredient in step.ingredients" :key="ingredient.id">
-            {{ ingredient.name }}: {{ ingredient.amount }} {{ ingredient.unit }}
-          </b-list-group-item>
-        </b-list-group>
-      </b-list-group-item>
-    </b-list-group>
-  </div>
-</div>
+      </div>
+  </b-container>
 </template>
-
 <script>
-import { BButton, BFormCheckbox, BListGroup, BListGroupItem } from 'bootstrap-vue';
-import recipeData from "../assets/mocks/analyzedInstructions324694.json";
+import { BContainer, BButton, BFormCheckbox, BImg, BListGroup, BListGroupItem } from 'bootstrap-vue';
+
+import analyzedInstructions from "../assets/mocks/analyzedInstructions324694.json";
+import recipeInformation from "../assets/mocks/GetRecipeInformation324694.json";
+
 
 export default {
   name: 'MealPreparingPage',
   components: {
-    BButton,
-    BFormCheckbox,
-    BListGroup,
-    BListGroupItem
+    BContainer, BButton, BFormCheckbox, BImg, BListGroup, BListGroupItem
   },
   data() {
     return {
-      recipeSteps: [],
-      originalIngredients: [],
+      steps: [],
+      ingredients: [],
       multiplier: 1
     };
   },
-  mounted() {
-    this.loadRecipe();
+
+  created() {
+    this.steps = analyzedInstructions[0].steps.map(step => ({
+      ...step,
+      completed: false,
+      ingredients: step.ingredients.map(ingredient => ({
+        ...ingredient,
+        amount: this.findIngredientAmount(ingredient.id)
+      }))
+    }));
+
+    this.ingredients = recipeInformation.extendedIngredients.map(ingredient => ({
+      id: ingredient.id,
+      name: ingredient.name,
+      image: ingredient.image,
+      amount: ingredient.measures.us.amount,
+      unit: ingredient.measures.us.unitShort
+    }));
   },
   methods: {
-    loadRecipe() {
-      this.recipeSteps = recipeData[0].steps.map(step => ({
-        ...step,
-        completed: false,
-        ingredients: step.ingredients.map(ingredient => ({
-          ...ingredient,
-          originalAmount: ingredient.amount || 1,
-          amount: ingredient.amount || 1
-        }))
-      }));
-      console.log(this.recipeSteps); // Check if recipe steps are correctly initialized
+    findIngredientAmount(id) {
+      const ingredient = recipeInformation.extendedIngredients.find(ing => ing.id === id);
+      return ingredient ? ingredient.measures.us.amount : 0;
     },
-    multiplyIngredients() {
-      this.multiplier *= 2;
-      this.recipeSteps.forEach(step => {
-        step.ingredients.forEach(ingredient => {
-          ingredient.amount = ingredient.originalAmount * this.multiplier;
-        });
-      });
-      console.log(this.recipeSteps); // Verify ingredients are correctly multiplied
+    multiplyQuantities() {
+      this.multiplier = this.multiplier * 2;
     }
   }
 };
 </script>
 
 <style scoped>
-.container {
-  margin-top: 20px;
-}
-.mb-3 {
-  margin-bottom: 20px;
+.title{
+    text-align: center;
+
 }
 </style>
