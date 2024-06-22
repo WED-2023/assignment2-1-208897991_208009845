@@ -117,7 +117,7 @@ export default {
   },
   methods: {
     goToMealPreparationPage() {
-      this.$router.push({ name: 'MealPreparingPage', params: { recipeId: this.$route.params.recipeId } });
+      this.$router.push({ name: 'recipePlanning', params: { recipeId: this.$route.params.recipeId } });
     }
   }
 };
