@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import Icons from './Icons.vue';
+
 import icons from './Icons.vue';
 export default {
   // mounted() {
