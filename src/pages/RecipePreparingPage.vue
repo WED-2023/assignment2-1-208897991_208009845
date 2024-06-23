@@ -65,7 +65,7 @@ export default {
       return ingredient ? ingredient.measures.us.amount : 0;
     },
     multiplyQuantities() {
-      this.multiplier = this.multiplier * 2;
+      this.multiplier += 1;
     },
     updateProgress() {
       localStorage.setItem('recipeProgress', JSON.stringify(this.steps));
