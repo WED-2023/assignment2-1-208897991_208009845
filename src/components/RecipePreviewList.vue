@@ -2,12 +2,12 @@
   <div class="container">
   <b-container>
     <h3>
-      {{ title }}:
+      
       <slot></slot>
     </h3>
     <b-row :cols="columns" class="custom-row">
       <b-col v-for="r in recipes" :key="r.id" class="custom-col">
-        <RecipePreview class="recipePreview" :recipe="r" />
+        <RecipePreview class="recipePreview" :recipe="r" :fromAPI=fromAPI />
       </b-col>
     </b-row>
   </b-container>
@@ -39,6 +39,11 @@ export default {
     },
     recipes:{
       default: null
+    },
+    fromAPI:{
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   data() {

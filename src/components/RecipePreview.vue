@@ -1,6 +1,5 @@
 <template>
   <div class="card-container"> 
-    
     <b-card
       :to="{ name:'recipe', params: { recipeId: recipe.id } }"
       img-alt="Image"
@@ -9,10 +8,9 @@
       class="mb-1 card"
     >
       <template #header>
-        <b-link :to="{ name:'recipe', params: { recipeId: recipe.id } }"><button @click="markAsViewed" class="text-dark invisible-button">{{ recipe.title }}</button></b-link>
+        <b-link :to="{ name:'recipe', params: { recipeId: recipe.id, fromAPI: fromAPI } }"><button @click="markAsViewed" class="text-dark invisible-button">{{ recipe.title }}</button></b-link>
       </template>
-
-      <b-link :to="{ name:'recipe', params: { recipeId: recipe.id } }">
+      <b-link :to="{ name:'recipe', params: { recipeId: recipe.id, fromAPI: fromAPI } }">
           <b-card-img 
             :src="recipe.image"
             alt="Image"
@@ -21,7 +19,6 @@
             @click="markAsViewed"
           ></b-card-img>
         </b-link>
-
       <b-list-group flush>
         <b-list-group-item>Ready in {{ recipe.readyInMinutes }} minutes</b-list-group-item>
         <b-list-group-item>{{ recipe.aggregateLikes }} likes</b-list-group-item>
@@ -53,6 +50,11 @@ export default {
       type: Object,
       required: true
     },
+    fromAPI: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
   },
   methods: {
     markAsViewed() {
