@@ -5,6 +5,7 @@
       {{ fromAPI }}
       {{ this.recipe  }}
       {{ recipe }} -->
+       <!-- {{ family }} -->
   </div>
 </template>
 
@@ -12,6 +13,7 @@
 
 import { mockGetRecipeFullDetails } from "../services/recipes.js";
 import RecipePage from "../components/RecipePage.vue";
+import { mockGetFamilyRecipe } from "../services/user.js";
 import axios from 'axios';
 
 export default {
@@ -42,54 +44,37 @@ export default {
     this.recipeId = this.$route.params.recipeId;
     if (this.$route.params.fromAPI)
       this.fromAPI = this.$route.params.fromAPI;
+    if (this.$route.params.family)
+      this.family = this.$route.params.family;
 
     try {
       let results, response;
-      if (!this.fromAPI){
-        response = mockGetRecipeFullDetails(this.recipeId);
+
+      if (this.family){
+        response = mockGetFamilyRecipe(this.recipeId);
+ 
         if (response.status !== 200){
           this.$router.replace("/NotFound");
           return;
         }
-        results = response.data.recipe;
+        results = response.response.data.recipes;
       }
-      else{
+      else if (this.fromAPI){
         const apiKey = '0d0cd3fd33f045e884781cc1c28244ce';  // Replace with your Spoonacular API key
         const url = `https://api.spoonacular.com/recipes/${this.recipeId}/information?includeNutrition=true&apiKey=${apiKey}`;
 
         response = await axios.get(url);
         results = response.data;
+
       }
-
-      // let {
-      //   analyzedInstructions,
-      //   instructions,
-      //   extendedIngredients,
-      //   aggregateLikes,
-      //   readyInMinutes,
-      //   image,
-      //   title
-      // } = results;
-
-
-      // let _instructions = analyzedInstructions
-      //   .map((fstep) => {
-      //     fstep.steps[0].step = fstep.name + fstep.steps[0].step;
-      //     return fstep.steps;
-      //   })
-      //   .reduce((a, b) => [...a, ...b], []);
-
-      // let _recipe = {
-      //   instructions,
-      //   _instructions,
-      //   analyzedInstructions,
-      //   extendedIngredients,
-      //   aggregateLikes,
-      //   readyInMinutes,
-      //   image,
-      //   title
-      // };
-
+      else{
+        response = mockGetRecipeFullDetails(this.recipeId);
+        if (response.status !== 200){
+          this.$router.replace("/NotFound");
+          return;
+        }
+        results = response.data.recipe;        
+      }
       this.recipe = results;
     } catch (error) {
       console.log(error);

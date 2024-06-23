@@ -8,9 +8,9 @@
       class="mb-1 card"
     >
       <template #header>
-        <b-link :to="{ name:'recipe', params: { recipeId: recipe.id, fromAPI: fromAPI } }"><button @click="markAsViewed" class="text-dark invisible-button">{{ recipe.title }}</button></b-link>
+        <b-link :to="{ name:'recipe', params: { recipeId: recipe.id, fromAPI: fromAPI, family:family } }"><button @click="markAsViewed" class="text-dark invisible-button">{{ recipe.title }}</button></b-link>
       </template>
-      <b-link :to="{ name:'recipe', params: { recipeId: recipe.id, fromAPI: fromAPI } }">
+      <b-link :to="{ name:'recipe', params: { recipeId: recipe.id, fromAPI: fromAPI, family:family } }">
           <b-card-img 
             :src="recipe.image"
             alt="Image"
@@ -51,6 +51,11 @@ export default {
       required: true
     },
     fromAPI: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    family: {
       type: Boolean,
       required: false,
       default: false

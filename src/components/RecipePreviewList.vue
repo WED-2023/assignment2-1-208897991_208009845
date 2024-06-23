@@ -7,7 +7,7 @@
     </h3>
     <b-row :cols="columns" class="custom-row">
       <b-col v-for="r in recipes" :key="r.id" class="custom-col">
-        <RecipePreview class="recipePreview" :recipe="r" :fromAPI=fromAPI />
+        <RecipePreview class="recipePreview" :recipe="r" :fromAPI=fromAPI :family=family />
       </b-col>
     </b-row>
   </b-container>
@@ -41,6 +41,11 @@ export default {
       default: null
     },
     fromAPI:{
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    family:{
       type: Boolean,
       required: false,
       default: false

@@ -1,12 +1,12 @@
 <template>
   <div>
-    <RecipePreviewList :recipes="recipes" :columns="2" :amount="4" title="Family Recipe" class="Recipes center" />
+    <RecipePreviewList :recipes="recipes" :columns="2" :amount="4" :family=true title="Family Recipe" class="Recipes center" />
   </div>
 </template>
 
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
-import { mockGetFamilyRecipe } from "../services/user.js";
+import { mockGetFamilyRecipePreview } from "../services/user.js";
 
 export default {
   name: 'FamilyRecipesPage',
@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     updateRecipes() {
-      const { status, response: { data } } = mockGetFamilyRecipe();
+      const { status, response: { data } } = mockGetFamilyRecipePreview();
       if (status === 200) {
         this.recipes = data.recipes;
       }
