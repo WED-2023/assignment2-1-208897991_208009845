@@ -91,7 +91,7 @@ paths:
       summary: Get Search Page Information
       description: Retrieve information about the Search Page, including search functionality and filters.
       tags:
-        - Recipes
+        - Recipe
       responses:
         '200':
           description: Successfully retrieved the Search Page information.
@@ -99,7 +99,7 @@ paths:
       summary: Search for recipes
       description: Search for recipes based on user input and filters.
       tags:
-        - Recipes
+        - Recipe
       requestBody:
         required: true
         content:
@@ -183,8 +183,8 @@ paths:
   /FamilyRecipesPage:
     get:
       tags:
-        - user
-        - recipe
+        - User
+        - Recipe
       summary: Retrieve a list of family recipes
       responses:
         '200':
