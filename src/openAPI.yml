@@ -12,24 +12,28 @@ tags:
     description: Endpoints related to user management
   - name: Recipe
     description: Endpoints related to recipe management
-  - name: Page
+  - name: Website
     description: Endpoints related to different pages
 
+  
 paths:
   /: #main page
     get:
       tags:
-        - Page
+        - Website
       summary: Retrieve the main page
       responses:
         '200':
           description: Main page content
-          content:
-            text/html:
-              schema:
-                type: string
                 
   /RegisterPage:
+    get:
+      tags:
+        - User
+      summary: Get the registration page
+      responses:
+        '200':
+          description: Registration page content
     post:
       tags:
         - User
@@ -39,31 +43,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/Register'
+              description: User to register
       responses:
         '201':
           description: User registered
         '400':
           description: Bad request
-          
-      
-  /register: #updated
-    post:
-      tags:
-        Auth
-    summary: A new user from the client is added to the server
-    description: A JSON object contains all the details about the new user.
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:$ref: '#/components/schemas/User'
-          description: Inventory item to add
-    responses:'201':
-        description: A new user has been added'400':
-        description: wrong input parameters
-
+        
   /LoginPage:
+    get:
+      tags:
+        - User
+      summary: Get the login page
+      responses:
+        '200':
+          description: Login page content
+  
     post:
       tags:
         - User
@@ -81,7 +77,59 @@ paths:
           description: Unauthorized
           
   /AboutPage:
+    get:
+      summary: Get About Page Information
+      description: Retrieve information about the About Page, including details about the company, mission, history, and team.
+      tags:
+        - Website
+      responses:
+        '200':
+          description: Successfully retrieved the About Page information.
+  
   /SearchPage:
+    get:
+      summary: Get Search Page Information
+      description: Retrieve information about the Search Page, including search functionality and filters.
+      tags:
+        - Recipes
+      responses:
+        '200':
+          description: Successfully retrieved the Search Page information.
+    post:
+      summary: Search for recipes
+      description: Search for recipes based on user input and filters.
+      tags:
+        - Recipes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: The search query
+                  example: pasta
+                amount:
+                  description: The number of results to return
+                  example: 10
+                  type: integer
+                  enum: [5, 10, 15]
+                filter:
+                  type: string
+                  description: Filter the recipes by dietary preferences
+                  example: vegetarian
+                  enum: ["No filter", "Vegetarian", "Vegan"," Gluten Free"]
+              required:
+                - query
+      responses:
+        '200':
+          description: Successfully retrieved search results.
+        '404':
+          description: No recipes found.
+
+
   /RecipeViewPage/{recipeId}:
     get:
       tags:
@@ -93,6 +141,8 @@ paths:
           required: true
           schema:
             type: integer
+          example: 746382
+            
       responses:
         '200':
           description: Recipe details
@@ -103,10 +153,10 @@ paths:
         '404':
           description: Recipe not found
 
-  /favorites:
+  /FavoritesPage:
     get:
       tags:
-        - Recipe
+        - User
       summary: Retrieve a list of favorite recipes
       responses:
         '200':
@@ -115,11 +165,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RecipeList'
+        
 
   /MyRecipesPage:
     get:
       tags:
-        - Recipe
+        - User
       summary: Retrieve a list of user's own recipes
       responses:
         '200':
@@ -132,7 +183,8 @@ paths:
   /FamilyRecipesPage:
     get:
       tags:
-        - Recipe
+        - user
+        - recipe
       summary: Retrieve a list of family recipes
       responses:
         '200':
@@ -143,18 +195,64 @@ paths:
                 $ref: '#/components/schemas/RecipeList'
 
   /recipePreparingPage/{recipeId}:
+    get:
+      tags:
+        - Recipe
+      summary: Retrieve a specific recipe by ID for preparing
+      parameters:
+        - name: recipeId
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 746382
+      responses:
+        '200':
+          description: Recipe details for preparing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+        '404':
+          description: Recipe not found
 
 components:
   schemas:
-    User:
+    Register:
       type: object
       properties:
         username:
           type: string
-        email:
+          minLength: 3
+          maxLength: 8
+          description: username contains between 3 to 8 letters only
+          example: ofirtami
+        firstname:
           type: string
+          description: user's first name
+          example: Stefani
+        lastname:
+          type: string
+          description: user's last name
+          example: Germanotta
+        country:
+          type: string
+          description: user's country
+          example: Israel
         password:
           type: string
+          minLength: 3
+          maxLength: 8
+          format: password
+          description: |
+            password contains between 3 to 8 chars,
+            at least one of them is a number and a special char
+          example: joanne@
+        email:
+          type: string
+          format: email
+          description: user's email
+          example: ofirtamir@gmail.com
       required:
         - username
         - email
@@ -165,8 +263,18 @@ components:
       properties:
         email:
           type: string
+          format: email
+          description: user's email
+          example: ofirtamir@gmail.com
         password:
           type: string
+          minLength: 3
+          maxLength: 8
+          format: password
+          description: |
+            password contains between 3 to 8 chars,
+            at least one of them is a number and a special char
+          example: joanne
       required:
         - email
         - password
@@ -192,15 +300,7 @@ components:
       items:
         $ref: '#/components/schemas/Recipe'
 
-    MealPlan:
-      type: object
-      properties:
-        id:
-          type: string
-        meals:
-          type: array
-          items:
-            type: string
+
 servers:
   # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
