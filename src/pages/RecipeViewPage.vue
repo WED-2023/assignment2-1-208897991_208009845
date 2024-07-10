@@ -37,6 +37,7 @@ export default {
   },
   data() {
     return {
+      // eslint-disable-next-line vue/no-dupe-keys
       recipe: null
     };
   },

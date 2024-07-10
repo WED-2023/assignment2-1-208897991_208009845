@@ -55,11 +55,7 @@ import icons from "./Icons.vue";
 
 export default {
   name: "RecipePage",
-  data() {
-    return {
-      recipe: null
-    };
-  },
+
   props: {
     recipe: {
       type: Object,
