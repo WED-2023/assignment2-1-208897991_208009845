@@ -3,14 +3,14 @@ import recipe_full_view from "../assets/mocks/recipe_full_view.json";
 import recipe_family from '../assets/mocks/recipe_family.json';
 import recipe_preview from "../assets/mocks/recipe_preview.json";
 import recipe_preview_family from "../assets/mocks/recipe_preview_famliy.json";
+import axios from "axios";
+
+// export function mockAddFavorite(recipeId) {
+//   return { status: 200, response: { data: { message: "The Recipe successfully saved as favorite", success: true}} };
+// }
 
 
-export function mockAddFavorite(recipeId) {
-  return { status: 200, response: { data: { message: "The Recipe successfully saved as favorite", success: true}} };
-}
-export function mockDeleteFavorite(recipeId) {
-  return { status: 200, response: { data: { message: "The Recipe removed from favorites", success: true}} };
-}
+
 export function mockGetFavorites() {
   return { status: 200, response: { data: { recipes: recipe_preview } } };
 }

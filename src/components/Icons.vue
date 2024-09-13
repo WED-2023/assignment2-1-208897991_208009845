@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mockAddFavorite, mockDeleteFavorite } from "../services/user.js";
+// import { addFavorite, deleteFavorite } from "../services/user.js";
 export default {
     name: 'icons',
     data() {
@@ -43,10 +43,11 @@ export default {
         
         toggleFavorite() {
             this.isFavorite = !this.isFavorite;
-            const action = this.isFavorite ? mockAddFavorite : mockDeleteFavorite;
+            const action = this.isFavorite ? this.addFavorite : this.deleteFavorite;
 
             try {
-                const serverResponse = action(this.recipeId);
+                const username = this.$root.store.username;
+                const serverResponse = action(username, this.recipe.id);
 
                 const { status, response: { data } } = serverResponse;
 
@@ -78,9 +79,25 @@ export default {
         },
         updated() {
             this.isViewed = this.checkIfViewed(this.recipe.id);
+        },
+        async addFavorite() {
+            const username = this.$root.store.username;
+            const recipeId = this.recipe.id;
+            const response = await this.axios.post(this.$root.store.server_domain + '/favorites', {
+                recipeId,username
+            });
+            console.log(response);
+        },
+        async deleteFavorite() {
+            const username = this.$root.store.username;
+            const recipeId = this.recipe.id;
+            const response = await this.axios.delete(this.$root.store.server_domain + '/favorites', {    
+                recipeId,username
+            });
+            console.log(response);
         }
-    }
-};
+  }
+}
 </script>
 
 
