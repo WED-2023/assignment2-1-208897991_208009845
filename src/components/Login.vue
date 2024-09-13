@@ -41,8 +41,8 @@
         variant="primary"
         style="width:100px;display:block;"
         class="mx-auto w-100"
-        >Login</b-button
-      >
+        @click="Login"
+        >Login</b-button>
       <div class="mt-2">
         Do not have an account yet?
         <router-link to="registerpage"> Register in here</router-link>
@@ -94,21 +94,14 @@ export default {
     },
     async Login() {
       try {
-        
-        // const response = await this.axios.post(
-        //   this.$root.store.server_domain +"/Login",
-
-
-        //   {
-        //     username: this.form.username,
-        //     password: this.form.password
-        //   }
-        // );
-
-        const success = true; // modify this to test the error handling
-        const response = mockLogin(this.form.username, this.form.password, success);
-
-        // console.log(response);
+        const response = await this.axios.post(
+          this.$root.store.server_domain +"/Login",
+          {
+            username: this.form.username,
+            password: this.form.password
+          }
+        );
+        console.log(response);
         // this.$root.loggedIn = true;
         console.log(this.$root.store.login);
         this.$root.store.login(this.form.username);
