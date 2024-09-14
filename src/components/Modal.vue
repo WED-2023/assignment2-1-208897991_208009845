@@ -133,6 +133,7 @@ export default {
       showModal: false,
       recipe: {
         recipeId: '',
+        username: '', // שם משתמש יוזן מתוך הסשן
         image: '',
         title: '',
         readyInMinutes: '',
@@ -148,11 +149,14 @@ export default {
   },
   methods: {
     toggleModal() {
+      // בעת פתיחת המודל, נזין את שם המשתמש מתוך הסשן
+      this.recipe.username = this.$root.store.username || 'defaultUsername'; // כאן יש לגשת למשתנה שבו שם המשתמש מאוחסן בסשן
       this.showModal = !this.showModal;
     },
     resetForm() {
       this.recipe = {
         recipeId: '',
+        username: '', // לוודא ששם המשתמש מתאפס
         image: '',
         title: '',
         readyInMinutes: '',
@@ -167,31 +171,8 @@ export default {
     },
     async submitForm() {
       try {
-        // const recipeId = this.form.recipeId;
-        // const image = this.form.image;
-        // const title= this.form.title;
-        // const readyInMinutes = this.form.readyInMinutes;
-        // const aggregateLikes = this.form.aggregateLikes;
-        // const vegetarian = this.form.vegetarian;
-        // const vegan = this.form.vegan;
-        // const glutenFree = this.form.glutenFree;
-        // const summary = this.form.summary;
-        // const instructions = this.form.instructions;
-        // const analyzedInstructions = this.form.analyzedInstructions;
+        // שליחת המידע לשרת
         const response = await axios.post(this.$root.store.server_domain + "/users/addmyRecipe", this.recipe);
-        // {
-        // "recipeId" : recipeId,
-        // "image" : image,
-        // "title" : title,
-        // "readyInMinutes" : readyInMinutes,
-        // "aggregateLikes" : aggregateLikes,
-        // "vegetarian" : vegetarian,
-        // "vegan" : vegan,
-        // "glutenFree" :glutenFree,
-        // "summary" : summary,
-        // "analyzedInstructions" : analyzedInstructions,
-        // "instructions" : instructions
-        // } 
         console.log(response);
         if (response.status === 201) {
           this.$bvToast.toast('Recipe added successfully', {
@@ -220,7 +201,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-/* Add any custom styles here */
-</style>
