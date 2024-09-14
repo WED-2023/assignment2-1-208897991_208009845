@@ -36,6 +36,7 @@ export default {
         const response = await this.axios.get(
           this.$root.store.server_domain +"/users/familyRecipes"
         );
+        console.log(response.data);
         return response;
       } catch (error) {
         console.error("Error fetching family recipes:", error);

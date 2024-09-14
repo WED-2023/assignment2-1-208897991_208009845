@@ -55,12 +55,14 @@ import icons from "./Icons.vue";
 
 export default {
   name: "RecipePage",
-
   props: {
     recipe: {
       type: Object,
       required: true
     }
+  },
+  mounted() {
+    console.log("got into RecipePage", this.recipe);
   },
   components: {
     icons

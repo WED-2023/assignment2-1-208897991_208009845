@@ -1,16 +1,16 @@
 <template>
   <div class="card-container"> 
     <b-card
-      :to="{ name:'recipe', params: { recipeId: recipe.id } }"
+      :to="{ name:'recipe', params: { recipeId: recipe.id, myrecipe:myrecipe, family:family, recipe:recipe } }"
       img-alt="Image"
       img-top
       tag="article"
       class="mb-1 card"
     >
       <template #header>
-        <b-link :to="{ name:'recipe', params: { recipeId: recipe.recipeid, fromAPI: fromAPI, family:family } }"><button @click="markAsViewed" class="text-dark invisible-button">{{ recipe.title }}</button></b-link>
+        <b-link :to="{ name:'recipe', params: { recipeId: recipe.recipeid, myrecipe: myrecipe, family:family, recipe:recipe } }"><button @click="markAsViewed" class="text-dark invisible-button">{{ recipe.title }}</button></b-link>
       </template>
-      <b-link :to="{ name:'recipe', params: { recipeId: recipe.recipeid, fromAPI: fromAPI, family:family } }">
+      <b-link :to="{ name:'recipe', params: { recipeId: recipe.recipeid, myrecipe: myrecipe, family:family, recipe:recipe } }">
           <b-card-img 
             :src="recipe.image"
             alt="Image"
@@ -50,7 +50,7 @@ export default {
       type: Object,
       required: true
     },
-    fromAPI: {
+    myrecipe: {
       type: Boolean,
       required: false,
       default: false

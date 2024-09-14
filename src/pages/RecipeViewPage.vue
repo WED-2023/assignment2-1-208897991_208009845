@@ -1,11 +1,6 @@
 <template>
   <div class="container">
      <RecipePage :recipe=recipe />
-      <!-- {{ recipeId }}
-      {{ fromAPI }}
-      {{ this.recipe  }}
-      {{ recipe }} -->
-       <!-- {{ family }} -->
   </div>
 </template>
 
@@ -22,14 +17,19 @@ export default {
       type: [String, Number],
       required: true
     },
-    fromAPI: {
+    myrecipe: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    family: {
       type: Boolean,
       required: false,
       default: false
     },
     recipe: {
       type: Object,
-      required: false
+      required: true
     }
   },
   components: {
@@ -37,30 +37,27 @@ export default {
   },
   data() {
     return {
-      // eslint-disable-next-line vue/no-dupe-keys
       recipe: null
     };
   },
   async created() {
     this.recipeId = this.$route.params.recipeId;
-    if (this.$route.params.fromAPI)
-      this.fromAPI = this.$route.params.fromAPI;
+    if (this.$route.params.myrecipe)
+      this.myrecipe = this.$route.params.myrecipe;
     if (this.$route.params.family)
       this.family = this.$route.params.family;
+    if (this.$route.params.recipe)
+      this.recipe = this.$route.params.recipe;
 
     try {
       let results, response;
-
-      if (this.family){
-        response = mockGetFamilyRecipe(this.recipeId);
- 
-        if (response.status !== 200){
-          this.$router.replace("/NotFound");
-          return;
-        }
-        results = response.response.data.recipes;
+      console.log("recipViewPage:", this.myrecipe);
+      console.log("recipViewPage, family:", this.family);
+      if (this.family || this.myrecipe){ //if the recipe is from the family or my recipe, so show the recipe sent
+        results = this.recipe;
+        console.log(this.recipe)
       }
-      else{
+      else{ //else search in the API for more details about the recipe
         results = await axios.get(this.$root.store.server_domain + "/recipes/" + this.recipeId);
         results = results.data;
       }
