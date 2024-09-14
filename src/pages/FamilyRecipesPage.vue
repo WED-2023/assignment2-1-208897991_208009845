@@ -6,7 +6,7 @@
 
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
-import { mockGetFamilyRecipePreview } from "../services/user.js";
+import axios from 'axios';
 
 export default {
   name: 'FamilyRecipesPage',
@@ -22,14 +22,26 @@ export default {
     this.updateRecipes();
   },
   methods: {
-    updateRecipes() {
-      const { status, response: { data } } = mockGetFamilyRecipePreview();
-      if (status === 200) {
-        this.recipes = data.recipes;
+    async updateRecipes() {
+      const response = await this.getFamilyRecipePreview();
+      if (response.status === 200) {
+        this.recipes = response.data;
       }
       else
         alert("Error getting family recipes")
     },
+
+    async getFamilyRecipePreview() {
+      try {
+        const response = await this.axios.get(
+          this.$root.store.server_domain +"/users/familyRecipes"
+        );
+        return response;
+      } catch (error) {
+        console.error("Error fetching family recipes:", error);
+        return { status: error.response.status, response: error.response.data };
+      }
+    }
   }
 };
 </script>

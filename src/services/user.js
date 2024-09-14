@@ -9,20 +9,19 @@ import axios from "axios";
 //   return { status: 200, response: { data: { message: "The Recipe successfully saved as favorite", success: true}} };
 // }
 
-
-
 export function mockGetFavorites() {
   return { status: 200, response: { data: { recipes: recipe_preview } } };
 }
+
 export function mockGetUserRecipes() {
   return { status: 200, response: { data: { recipes: recipe_preview } } };
 }
+
 export function mockAddUserRecipe(recipeDetails) {
   return { status: 200, response: { data: { message: "The Recipe successfully added to My Recipes", success: true}} };
 }
-export function mockGetFamilyRecipePreview(recipeId) {
-  return { status: 200, response: { data: { recipes: recipe_preview_family } } };
-}
+
+
 export function mockGetFamilyRecipe(recipeId) {
   const recipe = recipe_family.find(recipe => recipe.id === recipeId);
   

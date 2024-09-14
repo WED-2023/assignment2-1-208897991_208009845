@@ -35,27 +35,34 @@ export default {
             return this.isFavorite ? require('@/assets/favorite-icon.png') : require('@/assets/not-favorite-icon.png');
         }
     },
+    async created() {
+        this.isViewed = this.checkIfViewed();
+        this.isFavorite = await this.checkIfFavorite();
+    },
     methods: {
         checkIfViewed() {
             let viewedRecipes = JSON.parse(localStorage.getItem('viewedRecipes')) || [];
             return viewedRecipes.includes(this.recipe.id);
         },
-        
-        toggleFavorite() {
+        async checkIfFavorite(){
+            const favoriteRecipes = await this.axios.get(this.$root.store.server_domain + '/users/favorites');
+            console.log("favoriteRecipes",favoriteRecipes);
+            console.log("this.recipe.id",this.recipe.id);
+            return favoriteRecipes.data.includes(this.recipe.id);
+        },
+        async toggleFavorite() {
             this.isFavorite = !this.isFavorite;
             const action = this.isFavorite ? this.addFavorite : this.deleteFavorite;
 
             try {
                 const username = this.$root.store.username;
-                const serverResponse = action(username, this.recipe.id);
-
-                const { status, response: { data } } = serverResponse;
-
-                if (status === 200 && data.success) {
-                console.log(data.message);
-                this.showToast(data.message, 'Success', 'success');
+                const serverResponse = await action(username, this.recipe.id);
+                console.log("server response:", serverResponse);
+                if (serverResponse.status === 200) {
+                    console.log(serverResponse.data);
+                    this.showToast(serverResponse.data, 'Success', 'success');
                 } else {
-                this.handleError(serverResponse);
+                    this.handleError(serverResponse);
                 }
             } catch (error) {
                 this.handleError(error);
@@ -74,27 +81,27 @@ export default {
             console.error('Error updating favorite status:', error);
             this.showToast('Error updating favorite status', 'Error', 'danger');
         },
-        created() {
-            this.isViewed = this.checkIfViewed(this.recipe.id);
-        },
-        updated() {
-            this.isViewed = this.checkIfViewed(this.recipe.id);
-        },
+        
         async addFavorite() {
             const username = this.$root.store.username;
             const recipeId = this.recipe.id;
-            const response = await this.axios.post(this.$root.store.server_domain + '/favorites', {
-                recipeId,username
+            console.log(username, recipeId);
+            const response = await this.axios.post(this.$root.store.server_domain + '/users/favorites', {
+                "username":username,
+                "recipeId":recipeId
             });
-            console.log(response);
+            return response;
         },
         async deleteFavorite() {
             const username = this.$root.store.username;
             const recipeId = this.recipe.id;
-            const response = await this.axios.delete(this.$root.store.server_domain + '/favorites', {    
-                recipeId,username
-            });
-            console.log(response);
+            console.log(username, recipeId);
+            const response = await this.axios.delete(this.$root.store.server_domain + '/users/favorites', {
+                data: { // 'data' is needed to send the body in DELETE requests
+                    "username": username,
+                    "recipeId": recipeId
+            }});
+            return response;
         }
   }
 }
