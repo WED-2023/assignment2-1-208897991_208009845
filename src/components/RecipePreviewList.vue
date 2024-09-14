@@ -16,7 +16,6 @@
 
 <script>
 import RecipePreview from "./RecipePreview.vue";
-import { mockGetRecipesPreview } from "../services/recipes.js";
 
 export default {
   name: "RecipePreviewList",
@@ -28,24 +27,24 @@ export default {
       type: String,
       required: true
     },
-    amount:{
+    amount: {
       type: Number,
       required: true
     },
-    columns:{
+    columns: {
       type: Number,
       required: false,
       default: 3  
     },
-    recipes:{
+    recipes: {
       default: null
     },
-    fromAPI:{
+    fromAPI: {
       type: Boolean,
       required: false,
       default: false
     },
-    family:{
+    family: {
       type: Boolean,
       required: false,
       default: false
@@ -63,27 +62,27 @@ export default {
     }
   },
   methods: {
-    IncreaseOffset(increaseValue = 3){
-      this.offset += increaseValue
-      this.updateRecipes()
+    IncreaseOffset(increaseValue = 3) {
+      this.offset += increaseValue;
+      this.updateRecipes();
     },
     async updateRecipes() {
       try {
-        // const response = await this.axios.get(
-        //   this.$root.store.server_domain + "/recipes/random",
-        // );
-        this.recipes = mockGetRecipesPreview(this.amount, this.offset).data.recipes;
-        console.log(recipes);
-        this.recipes = [];
-        this.recipes.push(...recipes);
+        const response = await this.axios.get(
+          this.$root.store.server_domain + "/recipes/random", 
+          {
+            params: { number: this.amount } 
+          }
+        );
+        this.recipes = response.data; 
+        console.log(this.recipes);
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching recipes:", error);
       }
     }
-  }
+  }
 };
 </script>
-
 <style lang="scss" scoped>
 .container{
   display: flex;
