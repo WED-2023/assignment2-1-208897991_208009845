@@ -45,7 +45,7 @@ export default {
             return viewedRecipes.includes(this.recipe.id);
         },
         async checkIfFavorite(){
-            const favoriteRecipes = await this.axios.get(this.$root.store.server_domain + '/users/favorites');
+            const favoriteRecipes = await this.axios.get(this.$root.store.server_domain + '/users/favoritesID');
             console.log("favoriteRecipes",favoriteRecipes);
             console.log("this.recipe.id",this.recipe.id);
             return favoriteRecipes.data.includes(this.recipe.id);
