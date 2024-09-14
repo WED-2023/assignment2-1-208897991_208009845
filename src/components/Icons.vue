@@ -2,7 +2,7 @@
     
     <div class="footer-icons">
         <b-icon v-if="checkIfViewed()" icon="eye" class="viewed-icon"></b-icon>
-        <span :to="{ name: 'recipe', params: { recipeId: recipe.id } }" v-if="recipe.vegetarian"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Vegetarian-mark.svg/1200px-Vegetarian-mark.svg.png" class="vegi" /></span>
+        <router-link :to="{ name: 'recipe', params: { recipeId: recipe.recipeid } }" v-if="recipe.vegetarian"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Vegetarian-mark.svg/1200px-Vegetarian-mark.svg.png" class="vegi" /></router-link>
         <span v-if="recipe.vegan"><img src="https://uxwing.com/wp-content/themes/uxwing/download/food-and-drinks/vegan-icon.png" class="vegan" /></span>
         <span v-if="recipe.glutenFree"><img src="https://cdn-icons-png.flaticon.com/512/4337/4337722.png" class="glutenFree" /></span>
         
@@ -42,13 +42,11 @@ export default {
     methods: {
         checkIfViewed() {
             let viewedRecipes = JSON.parse(localStorage.getItem('viewedRecipes')) || [];
-            return viewedRecipes.includes(this.recipe.id);
+            return viewedRecipes.includes(this.recipe.recipeid);
         },
         async checkIfFavorite(){
             const favoriteRecipes = await this.axios.get(this.$root.store.server_domain + '/users/favoritesID');
-            console.log("favoriteRecipes",favoriteRecipes);
-            console.log("this.recipe.id",this.recipe.id);
-            return favoriteRecipes.data.includes(this.recipe.id);
+            return favoriteRecipes.data.includes(this.recipe.recipeid);
         },
         async toggleFavorite() {
             this.isFavorite = !this.isFavorite;
@@ -56,10 +54,8 @@ export default {
 
             try {
                 const username = this.$root.store.username;
-                const serverResponse = await action(username, this.recipe.id);
-                console.log("server response:", serverResponse);
+                const serverResponse = await action(username, this.recipe.recipeid);
                 if (serverResponse.status === 200) {
-                    console.log(serverResponse.data);
                     this.showToast(serverResponse.data, 'Success', 'success');
                 } else {
                     this.handleError(serverResponse);
@@ -82,20 +78,14 @@ export default {
             this.showToast('Error updating favorite status', 'Error', 'danger');
         },
         
-        async addFavorite() {
-            const username = this.$root.store.username;
-            const recipeId = this.recipe.id;
-            console.log(username, recipeId);
+        async addFavorite(username, recipeId) {
             const response = await this.axios.post(this.$root.store.server_domain + '/users/favorites', {
                 "username":username,
                 "recipeId":recipeId
             });
             return response;
         },
-        async deleteFavorite() {
-            const username = this.$root.store.username;
-            const recipeId = this.recipe.id;
-            console.log(username, recipeId);
+        async deleteFavorite(username, recipeId) {
             const response = await this.axios.delete(this.$root.store.server_domain + '/users/favorites', {
                 data: { // 'data' is needed to send the body in DELETE requests
                     "username": username,

@@ -60,23 +60,12 @@ export default {
         }
         results = response.response.data.recipes;
       }
-      else if (this.fromAPI){
-        const apiKey = '0d0cd3fd33f045e884781cc1c28244ce';  // Replace with your Spoonacular API key
-        const url = `https://api.spoonacular.com/recipes/${this.recipeId}/information?includeNutrition=true&apiKey=${apiKey}`;
-
-        response = await axios.get(url);
-        results = response.data;
-
-      }
       else{
-        response = mockGetRecipeFullDetails(this.recipeId);
-        if (response.status !== 200){
-          this.$router.replace("/NotFound");
-          return;
-        }
-        results = response.data.recipe;        
+        results = await axios.get(this.$root.store.server_domain + "/recipes/" + this.recipeId);
+        results = results.data;
       }
       this.recipe = results;
+      console.log(this.recipe);
     } catch (error) {
       console.log(error);
       alert(error)

@@ -2,7 +2,11 @@
   <b-container class="h-100">
     <div class="d-flex flex-column">
       <h1 class="title">Recipe Preparing Page</h1>
-      <b-button style="background-color: #c8a2c8;" @click="multiplyQuantities">Multiply Quantities</b-button>
+      <div class="d-flex align-items-center mb-3">
+        <b-button style="background-color: #c8a2c8;" @click="multiplier > 1 ? multiplier-- : 1">-</b-button>
+        <span class="mx-3">{{ multiplier }}</span>
+        <b-button style="background-color: #c8a2c8;" @click="multiplier++">+</b-button>
+      </div>
       <b-list-group>
         <b-list-group-item v-for="(step, index) in steps" :key="index">
           <b-form-checkbox v-model="step.completed" @change="updateProgress">

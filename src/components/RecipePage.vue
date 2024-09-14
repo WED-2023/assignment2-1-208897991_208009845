@@ -40,7 +40,7 @@
 
       <b-card bg-variant="dark" text-variant="white" title="Instructions:">
         <b-card-text>
-          {{ recipe.instructions }}
+          {{ recipe.instructions.replace(/<[^>]*>/g, '') }}
         </b-card-text>
       </b-card>
       <hr class="my-4">

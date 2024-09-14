@@ -8,9 +8,9 @@
       class="mb-1 card"
     >
       <template #header>
-        <b-link :to="{ name:'recipe', params: { recipeId: recipe.id, fromAPI: fromAPI, family:family } }"><button @click="markAsViewed" class="text-dark invisible-button">{{ recipe.title }}</button></b-link>
+        <b-link :to="{ name:'recipe', params: { recipeId: recipe.recipeid, fromAPI: fromAPI, family:family } }"><button @click="markAsViewed" class="text-dark invisible-button">{{ recipe.title }}</button></b-link>
       </template>
-      <b-link :to="{ name:'recipe', params: { recipeId: recipe.id, fromAPI: fromAPI, family:family } }">
+      <b-link :to="{ name:'recipe', params: { recipeId: recipe.recipeid, fromAPI: fromAPI, family:family } }">
           <b-card-img 
             :src="recipe.image"
             alt="Image"
@@ -63,8 +63,10 @@ export default {
   },
   methods: {
     markAsViewed() {
+
         let viewedRecipes = JSON.parse(localStorage.getItem('viewedRecipes')) || [];
-        if (!viewedRecipes.includes(this.recipe.id)) {
+        
+        if (!viewedRecipes.includes(this.recipe.recipeid)) {
             viewedRecipes.push(this.recipe.id);
             localStorage.setItem('viewedRecipes', JSON.stringify(viewedRecipes));
             this.isViewed = true; 
