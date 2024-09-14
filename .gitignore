@@ -2,6 +2,8 @@
 node_modules
 dist
 dist\index.html
+index.html
+dist/index.html
 
 # local env files
 .env.local
