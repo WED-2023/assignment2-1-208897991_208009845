@@ -211,7 +211,7 @@ export default {
     form: {
       username: {
         required,
-        length: (u) => minLength(3)(u) && maxLength(8)(u),
+        length: (u) => minLength(2)(u) && maxLength(10)(u),
         alpha
       },
       firstname: {
