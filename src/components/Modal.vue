@@ -112,7 +112,16 @@
             rows="3"
           ></b-form-textarea>
         </b-form-group>
-        
+        <!-- extendedIngredients -->
+        <b-form-group label="extendedIngredients:" label-for="recipe-extendedIngredients">
+          <b-form-textarea
+            id="recipe-extendedIngredients"
+            v-model="recipe.extendedIngredients"
+            required
+            placeholder="Enter extendedIngredients (comma separated)"
+            rows="3"
+          ></b-form-textarea>
+        </b-form-group>
       </b-form>
       <template #modal-footer="{ cancel }">
         <b-button variant="danger" @click="cancel()">Cancel</b-button>
@@ -132,31 +141,32 @@ export default {
     return {
       showModal: false,
       recipe: {
-        recipeId: '',
-        username: '', // שם משתמש יוזן מתוך הסשן
-        image: '',
-        title: '',
-        readyInMinutes: '',
-        aggregateLikes: '',
-        vegetarian: false,
-        vegan: false,
-        glutenFree: false,
-        summary: '',
-        instructions: '',
-        analyzedInstructions: ''
-      }
+      recipeId: '',
+      username: '',
+      image: '',
+      title: '',
+      readyInMinutes: '',
+      aggregateLikes: '',
+      vegetarian: false,
+      vegan: false,
+      glutenFree: false,
+      summary: '',
+      instructions: '',
+      analyzedInstructions: '',
+      extendedIngredients: '' 
+    }
+
     };
   },
   methods: {
     toggleModal() {
-      // בעת פתיחת המודל, נזין את שם המשתמש מתוך הסשן
-      this.recipe.username = this.$root.store.username || 'defaultUsername'; // כאן יש לגשת למשתנה שבו שם המשתמש מאוחסן בסשן
+      this.recipe.username = this.$root.store.username || 'defaultUsername'; 
       this.showModal = !this.showModal;
     },
     resetForm() {
       this.recipe = {
         recipeId: '',
-        username: '', // לוודא ששם המשתמש מתאפס
+        username: '',
         image: '',
         title: '',
         readyInMinutes: '',
@@ -166,38 +176,119 @@ export default {
         glutenFree: false,
         summary: '',
         instructions: '',
-        analyzedInstructions: ''
+        analyzedInstructions: '',
+        extendedIngredients: '' 
       };
     },
     async submitForm() {
-      try {
-        // שליחת המידע לשרת
-        const response = await axios.post(this.$root.store.server_domain + "/users/addmyRecipe", this.recipe);
-        console.log(response);
-        if (response.status === 201) {
-          this.$bvToast.toast('Recipe added successfully', {
-            title: 'Success',
-            variant: 'success',
-            solid: true
-          });
-          this.toggleModal();
-          this.resetForm();
-        } else {
-          this.$bvToast.toast('Error adding recipe', {
-            title: 'Error',
-            variant: 'danger',
-            solid: true
-          });
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        this.$bvToast.toast('Error adding recipe', {
-          title: 'Error',
-          variant: 'danger',
-          solid: true
-        });
-      }
+  if (!this.recipe.recipeId) {
+    this.$bvToast.toast('Please enter the Recipe ID', {
+      title: 'Missing Recipe ID',
+      variant: 'warning',
+      solid: true
+    });
+    return;
+  }
+
+  if (!this.recipe.title) {
+    this.$bvToast.toast('Please enter the Recipe Title', {
+      title: 'Missing Recipe Title',
+      variant: 'warning',
+      solid: true
+    });
+    return;
+  }
+
+  if (!this.recipe.image) {
+    this.$bvToast.toast('Please enter the Image URL', {
+      title: 'Missing Image URL',
+      variant: 'warning',
+      solid: true
+    });
+    return;
+  }
+
+  if (!this.recipe.readyInMinutes) {
+    this.$bvToast.toast('Please enter the Ready In Minutes', {
+      title: 'Missing Ready In Minutes',
+      variant: 'warning',
+      solid: true
+    });
+    return;
+  }
+
+  if (!this.recipe.aggregateLikes) {
+    this.$bvToast.toast('Please enter the Aggregate Likes', {
+      title: 'Missing Aggregate Likes',
+      variant: 'warning',
+      solid: true
+    });
+    return;
+  }
+
+  if (!this.recipe.summary) {
+    this.$bvToast.toast('Please enter the Summary', {
+      title: 'Missing Summary',
+      variant: 'warning',
+      solid: true
+    });
+    return;
+  }
+
+  if (!this.recipe.instructions) {
+    this.$bvToast.toast('Please enter the Instructions', {
+      title: 'Missing Instructions',
+      variant: 'warning',
+      solid: true
+    });
+    return;
+  }
+
+  if (!this.recipe.analyzedInstructions) {
+    this.$bvToast.toast('Please enter the Analyzed Instructions', {
+      title: 'Missing Analyzed Instructions',
+      variant: 'warning',
+      solid: true
+    });
+    return;
+  }
+
+  if (!this.recipe.extendedIngredients) {
+    this.$bvToast.toast('Please enter the Ingredients', {
+      title: 'Missing Ingredients',
+      variant: 'warning',
+      solid: true
+    });
+    return;
+  }
+
+  try {
+    const response = await axios.post(this.$root.store.server_domain + "/users/addmyRecipe", this.recipe);
+    if (response.status === 201) {
+      this.$bvToast.toast('Recipe added successfully', {
+        title: 'Success',
+        variant: 'success',
+        solid: true
+      });
+      this.toggleModal();
+      this.resetForm();
+    } else {
+      this.$bvToast.toast('Error adding recipe', {
+        title: 'Error',
+        variant: 'danger',
+        solid: true
+      });
     }
+  } catch (error) {
+    console.error('Error:', error);
+    this.$bvToast.toast('Error adding recipe', {
+      title: 'Error',
+      variant: 'danger',
+      solid: true
+    });
+  }
+}
+
   }
 };
 </script>
