@@ -2,7 +2,7 @@
     <div class="container">
     <h1 class="title" >About Us</h1>
       <div class="jumbotron">
-
+          <img src="../assets/Chen.jpeg" alt="Chen Frydman" class="circle" />
           <h1 class="names"><b>Chen Frydman</b></h1>
             </br>
           <p>
@@ -13,7 +13,7 @@
         <a href="https://github.com/ChenFryd">GitHub</a>
     </div>
     <div class="jumbotron">
-        
+      <img src="../assets/Ofir.jpeg" alt="Ofir Tamir" class="circle" />
         <h1 class="names"><b>Ofir Tamir</b></h1>
           </br>
         <p>
@@ -33,6 +33,10 @@
 </script>
 
 <style lang="scss" scoped>
+.circle {
+  border-radius: 50%;
+  width:200px;height:200px;
+}
 .container{
     margin-top: 100px;
     display: flex;

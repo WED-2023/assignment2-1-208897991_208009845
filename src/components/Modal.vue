@@ -7,7 +7,7 @@
       @hide="resetForm"
     >
       <b-form @submit.prevent="submitForm">
-        <!-- Recipe ID -->
+        <!-- Recipe ID
         <b-form-group label="Recipe ID:" label-for="recipe-id">
           <b-form-input
             id="recipe-id"
@@ -15,7 +15,7 @@
             required
             placeholder="Enter recipe ID"
           ></b-form-input>
-        </b-form-group>
+        </b-form-group> -->
 
         <!-- Recipe Title -->
         <b-form-group label="Recipe Title:" label-for="recipe-title">
@@ -56,6 +56,17 @@
             type="number"
             required
             placeholder="Enter aggregate likes"
+          ></b-form-input>
+        </b-form-group>
+
+        <!-- Servings -->
+        <b-form-group label="Servings:" label-for="recipe-servings">
+          <b-form-input
+            id="recipe-servings"
+            v-model="recipe.servings"
+            type="number"
+            required
+            placeholder="Enter servings"
           ></b-form-input>
         </b-form-group>
 
@@ -103,7 +114,7 @@
         </b-form-group>
 
         <!-- Analyzed Instructions -->
-        <b-form-group label="Analyzed Instructions:" label-for="recipe-analyzedinstructions">
+        <!-- <b-form-group label="Analyzed Instructions:" label-for="recipe-analyzedinstructions">
           <b-form-textarea
             id="recipe-analyzedinstructions"
             v-model="recipe.analyzedInstructions"
@@ -111,7 +122,8 @@
             placeholder="Enter analyzed instructions"
             rows="3"
           ></b-form-textarea>
-        </b-form-group>
+        </b-form-group> -->
+        
         <!-- extendedIngredients -->
         <b-form-group label="extendedIngredients:" label-for="recipe-extendedIngredients">
           <b-form-textarea
@@ -141,18 +153,19 @@ export default {
     return {
       showModal: false,
       recipe: {
-      recipeId: '',
+      // recipeId: '',
       username: '',
       image: '',
       title: '',
       readyInMinutes: '',
       aggregateLikes: '',
+      servings: '',
       vegetarian: false,
       vegan: false,
       glutenFree: false,
       summary: '',
       instructions: '',
-      analyzedInstructions: '',
+      // analyzedInstructions: '',
       extendedIngredients: '' 
     }
 
@@ -165,30 +178,31 @@ export default {
     },
     resetForm() {
       this.recipe = {
-        recipeId: '',
+        // recipeId: '',
         username: '',
         image: '',
         title: '',
         readyInMinutes: '',
         aggregateLikes: '',
+        servings: '',
         vegetarian: false,
         vegan: false,
         glutenFree: false,
         summary: '',
         instructions: '',
-        analyzedInstructions: '',
+        // analyzedInstructions: '',
         extendedIngredients: '' 
       };
     },
     async submitForm() {
-  if (!this.recipe.recipeId) {
-    this.$bvToast.toast('Please enter the Recipe ID', {
-      title: 'Missing Recipe ID',
-      variant: 'warning',
-      solid: true
-    });
-    return;
-  }
+  // if (!this.recipe.recipeId) {
+  //   this.$bvToast.toast('Please enter the Recipe ID', {
+  //     title: 'Missing Recipe ID',
+  //     variant: 'warning',
+  //     solid: true
+  //   });
+  //   return;
+  // }
 
   if (!this.recipe.title) {
     this.$bvToast.toast('Please enter the Recipe Title', {
@@ -226,6 +240,15 @@ export default {
     return;
   }
 
+  if (!this.recipe.servings) {
+    this.$bvToast.toast('Please enter the Servings', {
+      title: 'Missing Servings',
+      variant: 'warning',
+      solid: true
+    });
+    return;
+  }
+
   if (!this.recipe.summary) {
     this.$bvToast.toast('Please enter the Summary', {
       title: 'Missing Summary',
@@ -244,14 +267,14 @@ export default {
     return;
   }
 
-  if (!this.recipe.analyzedInstructions) {
-    this.$bvToast.toast('Please enter the Analyzed Instructions', {
-      title: 'Missing Analyzed Instructions',
-      variant: 'warning',
-      solid: true
-    });
-    return;
-  }
+  // if (!this.recipe.analyzedInstructions) {
+  //   this.$bvToast.toast('Please enter the Analyzed Instructions', {
+  //     title: 'Missing Analyzed Instructions',
+  //     variant: 'warning',
+  //     solid: true
+  //   });
+  //   return;
+  // }
 
   if (!this.recipe.extendedIngredients) {
     this.$bvToast.toast('Please enter the Ingredients', {
@@ -274,7 +297,7 @@ export default {
       this.resetForm();
     } else {
       this.$bvToast.toast('Error adding recipe', {
-        title: 'Error',
+        title: response.data.message || 'Error',
         variant: 'danger',
         solid: true
       });

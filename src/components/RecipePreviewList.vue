@@ -48,6 +48,11 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    id: {
+      type: Number,
+      required: false,
+      default: 0
     }
   },
   data() {
@@ -62,25 +67,43 @@ export default {
     }
   },
   methods: {
-    IncreaseOffset(increaseValue = 3) {
-      this.offset += increaseValue;
-      this.updateRecipes();
-    },
-    async updateRecipes() {
+    async IncreaseOffset() {
       try {
         const response = await this.axios.get(
           this.$root.store.server_domain + "/recipes/random", 
           {
-            params: { number: this.amount } 
+          params: { number: this.amount } 
           }
         );
         this.recipes = response.data; 
-        console.log(this.recipes);
+      
+        localStorage.setItem(this.id+'recipes', JSON.stringify(this.recipes)); // Save to local storage
+       console.log(this.recipes);
       } catch (error) {
-        console.error("Error fetching recipes:", error);
+      console.error("Error fetching recipes:", error);
+      }
+    },
+    async updateRecipes() {
+      const storedRecipes = localStorage.getItem(this.id+'recipes')
+      if (storedRecipes) {
+        this.recipes = JSON.parse(storedRecipes);
+        return;
+      }
+      try {
+      const response = await this.axios.get(
+        this.$root.store.server_domain + "/recipes/random", 
+        {
+        params: { number: this.amount } 
+        }
+      );
+      this.recipes = response.data; 
+      
+      localStorage.setItem(this.id+'recipes', JSON.stringify(this.recipes)); // Save to local storage
+      } catch (error) {
+      console.error("Error fetching recipes:", error);
       }
     }
-  }
+   }
 };
 </script>
 <style lang="scss" scoped>

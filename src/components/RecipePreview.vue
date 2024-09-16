@@ -63,11 +63,9 @@ export default {
   },
   methods: {
     markAsViewed() {
-
         let viewedRecipes = JSON.parse(localStorage.getItem('viewedRecipes')) || [];
-        
         if (!viewedRecipes.includes(this.recipe.recipeid)) {
-            viewedRecipes.push(this.recipe.id);
+            viewedRecipes.push(this.recipe.recipeid);
             localStorage.setItem('viewedRecipes', JSON.stringify(viewedRecipes));
             this.isViewed = true; 
         }
