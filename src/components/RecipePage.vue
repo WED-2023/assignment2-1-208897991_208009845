@@ -17,6 +17,9 @@
                 <div>Likes: {{ recipe.aggregateLikes }} likes
                   <b-icon icon="suit-heart-fill" variant="info" ></b-icon>
                 </div>
+                <div>Servings: {{ recipe.servings }} servings
+                  <b-icon icon="egg-fried" variant="info"></b-icon>
+                </div>
               </div>
             </div>
             
