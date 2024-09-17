@@ -67,7 +67,7 @@ export default {
     }
   },
   methods: {
-    async IncreaseOffset() {
+    async randomize() {
       try {
         const response = await this.axios.get(
           this.$root.store.server_domain + "/recipes/random", 
@@ -77,14 +77,14 @@ export default {
         );
         this.recipes = response.data; 
       
-        localStorage.setItem(this.id+'recipes', JSON.stringify(this.recipes)); // Save to local storage
+        sessionStorage.setItem(this.id+'recipes', JSON.stringify(this.recipes)); // Save to local storage
        console.log(this.recipes);
       } catch (error) {
       console.error("Error fetching recipes:", error);
       }
     },
     async updateRecipes() {
-      const storedRecipes = localStorage.getItem(this.id+'recipes')
+      const storedRecipes = sessionStorage.getItem(this.id+'recipes')
       if (storedRecipes) {
         this.recipes = JSON.parse(storedRecipes);
         return;
@@ -98,7 +98,7 @@ export default {
       );
       this.recipes = response.data; 
       
-      localStorage.setItem(this.id+'recipes', JSON.stringify(this.recipes)); // Save to local storage
+      sessionStorage.setItem(this.id+'recipes', JSON.stringify(this.recipes)); // Save to local storage
       } catch (error) {
       console.error("Error fetching recipes:", error);
       }

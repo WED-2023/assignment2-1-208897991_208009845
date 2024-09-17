@@ -71,26 +71,20 @@
         </b-form-group>
 
         <!-- Vegetarian -->
-        <b-form-group label="Vegetarian:" label-for="recipe-vegetarian">
           <b-form-checkbox v-model="recipe.vegetarian">
             Is Vegetarian
           </b-form-checkbox>
-        </b-form-group>
 
         <!-- Vegan -->
-        <b-form-group label="Vegan:" label-for="recipe-vegan">
           <b-form-checkbox v-model="recipe.vegan">
             Is Vegan
           </b-form-checkbox>
-        </b-form-group>
 
         <!-- Gluten Free -->
-        <b-form-group label="Gluten Free:" label-for="recipe-glutenfree">
           <b-form-checkbox v-model="recipe.glutenFree">
             Is Gluten Free
           </b-form-checkbox>
-        </b-form-group>
-
+        </br>
         <!-- Summary -->
         <b-form-group label="Summary:" label-for="recipe-summary">
           <b-form-textarea
@@ -125,12 +119,12 @@
         </b-form-group> -->
         
         <!-- extendedIngredients -->
-        <b-form-group label="extendedIngredients:" label-for="recipe-extendedIngredients">
+        <b-form-group label="Ingredients:" label-for="recipe-extendedIngredients">
           <b-form-textarea
             id="recipe-extendedIngredients"
             v-model="recipe.extendedIngredients"
             required
-            placeholder="Enter extendedIngredients (comma separated)"
+            placeholder="Enter ingredients"
             rows="3"
           ></b-form-textarea>
         </b-form-group>

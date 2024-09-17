@@ -35,7 +35,7 @@ export default {
   },
   methods:{
     generateRandomRecipes(){
-      this.$refs.listOfRecipes.IncreaseOffset(4)
+      this.$refs.listOfRecipes.randomize();
     },
   }
 };

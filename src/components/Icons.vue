@@ -39,14 +39,30 @@ export default {
         this.isViewed = this.checkIfViewed();
         this.isFavorite = await this.checkIfFavorite();
     },
+    watch: { //so when this.recipe changes with the random, it will check the favorites again
+    recipe: {
+        handler: async function() {
+            this.isViewed = this.checkIfViewed();
+            this.isFavorite = await this.checkIfFavorite();
+        },
+        deep: true // if the recipe object has nested properties that might change
+    }
+},
     methods: {
         checkIfViewed() {
             let viewedRecipes = JSON.parse(localStorage.getItem('viewedRecipes')) || [];
             return viewedRecipes.includes(this.recipe.recipeid);
         },
         async checkIfFavorite(){
-            const favoriteRecipes = await this.axios.get(this.$root.store.server_domain + '/users/favoritesID');
-            return favoriteRecipes.data.includes(this.recipe.recipeid);
+            console.log('checkIfFavorite');
+            let favoriteRecipes = JSON.parse(sessionStorage.getItem('favoriteRecipes')) || [];
+            if (favoriteRecipes.length === 0) {
+                favoriteRecipes = await this.axios.get(this.$root.store.server_domain + '/users/favoritesID');
+                favoriteRecipes = favoriteRecipes.data;
+                sessionStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+            }
+            console.log(favoriteRecipes.includes(this.recipe.recipeid))
+            return favoriteRecipes.includes(this.recipe.recipeid);
         },
         async toggleFavorite() {
             this.isFavorite = !this.isFavorite;
@@ -79,6 +95,14 @@ export default {
         },
         
         async addFavorite(username, recipeId) {
+            
+            let favoriteRecipes = JSON.parse(sessionStorage.getItem('favoriteRecipes')) || [];
+            console.log('before add:', favoriteRecipes);
+            if (!favoriteRecipes.includes(recipeId)) {
+                favoriteRecipes.push(recipeId);
+                sessionStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+            }
+            console.log('after add:', favoriteRecipes);
             const response = await this.axios.post(this.$root.store.server_domain + '/users/favorites', {
                 "username":username,
                 "recipeId":recipeId
@@ -86,6 +110,11 @@ export default {
             return response;
         },
         async deleteFavorite(username, recipeId) {
+            let favoriteRecipes = JSON.parse(sessionStorage.getItem('favoriteRecipes')) || [];
+            if (favoriteRecipes.includes(recipeId)) {
+                favoriteRecipes = favoriteRecipes.filter(id => id !== recipeId);
+                sessionStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+            }
             const response = await this.axios.delete(this.$root.store.server_domain + '/users/favorites', {
                 data: { // 'data' is needed to send the body in DELETE requests
                     "username": username,

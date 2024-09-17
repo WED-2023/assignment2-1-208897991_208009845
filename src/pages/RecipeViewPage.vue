@@ -6,9 +6,7 @@
 
 <script>
 
-import { mockGetRecipeFullDetails } from "../services/recipes.js";
 import RecipePage from "../components/RecipePage.vue";
-import { mockGetFamilyRecipe } from "../services/user.js";
 import axios from 'axios';
 
 export default {

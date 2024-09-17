@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { mockGetRecipeFullDetails } from "../services/recipes.js";
+
 import icons from "./Icons.vue";
 
 export default {

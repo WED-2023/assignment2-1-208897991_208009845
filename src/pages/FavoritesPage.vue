@@ -7,7 +7,6 @@
 <script>
 import axios from 'axios';
 import RecipePreviewList from "../components/RecipePreviewList";
-// import { mockGetFavorites } from "../services/user.js";
 
 export default {
   name: 'FavoritesPage',
@@ -24,7 +23,6 @@ export default {
   },
   methods: {
     async updateRecipes() {
-      // this.recipes = mockGetFavorites().response.data.recipes;
       const response = await this.getFavoritesRecipePreview();
       if (response.status === 200) {
         this.recipes = response.data;
