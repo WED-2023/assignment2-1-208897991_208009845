@@ -48,7 +48,7 @@
         />
       </div>
       <div v-else>
-        <p>No relevant results found.</p>
+        <p>No relevant results were found.</p>
       </div>
     </b-jumbotron>
   </div>

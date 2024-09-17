@@ -3,7 +3,7 @@
   <div class="page">
     <div class="container">
         <div class="left">
-          <RecipePreviewList ref="listOfRecipes" :columns=2 :amount=4  title="Explore these recipes" class="RandomRecipes center" />
+          <RecipePreviewList ref="listOfRecipes" :columns=2 :amount=4  title="Explore these recipes" class="RandomRecipes center" :id=0 />
           <div class="generate-wrapper">
             <b-button @click="generateRandomRecipes" variant="primary" block class="generate">Generate More Recipes</b-button>
           </div>
@@ -16,7 +16,7 @@
             </div>
           </span>
           <span v-else> 
-            <RecipePreviewList title="Last Viewed Recipes" :columns=2 :amount=4 class="RandomRecipes" />
+            <RecipePreviewList title="Last Viewed Recipes" :columns=2 :amount=4 class="RandomRecipes" :id=1 />
           </span>
         </div>
     </div>
