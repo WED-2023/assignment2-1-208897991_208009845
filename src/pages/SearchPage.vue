@@ -131,13 +131,44 @@ export default {
         });
 
         this.recipes = response.data;
+        // Save the current search state to localStorage
+        this.saveState();
       } catch (error) {
         console.error('Error fetching recipes:', error);
       }
     },
-    viewRecipe(recipeId) {
-      this.$router.push({ name: 'RecipeDetail', params: { id: recipeId } });
+    saveState() {
+      const searchState = {
+        query: this.query,
+        numberOfResults: this.numberOfResults,
+        selectedCuisine: this.selectedCuisine,
+        selectedDiet: this.selectedDiet,
+        selectedIntolerance: this.selectedIntolerance,
+        selectedFilter: this.selectedFilter,
+        sortOption: this.sortOption,
+      };
+      localStorage.setItem('searchState', JSON.stringify(searchState));
     },
+    loadState() {
+      const savedState = localStorage.getItem('searchState');
+      if (savedState) {
+        const { query, numberOfResults, selectedCuisine, selectedDiet, selectedIntolerance, selectedFilter, sortOption } = JSON.parse(savedState);
+        this.query = query;
+        this.numberOfResults = numberOfResults;
+        this.selectedCuisine = selectedCuisine;
+        this.selectedDiet = selectedDiet;
+        this.selectedIntolerance = selectedIntolerance;
+        this.selectedFilter = selectedFilter;
+        this.sortOption = sortOption;
+      }
+    },
+  },
+  mounted() {
+    this.loadState();
+  },
+  beforeDestroy() {
+    this.saveState();
   },
 };
 </script>
+
