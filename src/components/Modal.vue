@@ -49,7 +49,7 @@
         </b-form-group>
 
         <!-- Aggregate Likes -->
-        <b-form-group label="Aggregate Likes:" label-for="recipe-aggregatelikes">
+        <!-- <b-form-group label="Aggregate Likes:" label-for="recipe-aggregatelikes">
           <b-form-input
             id="recipe-aggregatelikes"
             v-model="recipe.aggregateLikes"
@@ -57,7 +57,7 @@
             required
             placeholder="Enter aggregate likes"
           ></b-form-input>
-        </b-form-group>
+        </b-form-group> -->
 
         <!-- Servings -->
         <b-form-group label="Servings:" label-for="recipe-servings">
@@ -158,7 +158,7 @@ export default {
       image: '',
       title: '',
       readyInMinutes: '',
-      aggregateLikes: '',
+      aggregateLikes: 0,
       servings: '',
       vegetarian: false,
       vegan: false,
@@ -183,7 +183,7 @@ export default {
         image: '',
         title: '',
         readyInMinutes: '',
-        aggregateLikes: '',
+        aggregateLikes: 0,
         servings: '',
         vegetarian: false,
         vegan: false,
@@ -231,14 +231,14 @@ export default {
     return;
   }
 
-  if (!this.recipe.aggregateLikes) {
-    this.$bvToast.toast('Please enter the Aggregate Likes', {
-      title: 'Missing Aggregate Likes',
-      variant: 'warning',
-      solid: true
-    });
-    return;
-  }
+  // if (!this.recipe.aggregateLikes) {
+  //   this.$bvToast.toast('Please enter the Aggregate Likes', {
+  //     title: 'Missing Aggregate Likes',
+  //     variant: 'warning',
+  //     solid: true
+  //   });
+  //   return;
+  // }
 
   if (!this.recipe.servings) {
     this.$bvToast.toast('Please enter the Servings', {
