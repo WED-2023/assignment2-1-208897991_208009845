@@ -9,7 +9,7 @@
               <img :src="recipe.image" class="image" />
               <div class="info">
                 <icons :recipe="recipe"></icons>
-                <b-button @click="goToMealPreparationPage" variant="primary">Go to Meal Preparation</b-button>
+                <b-button @click="goToMealPreparationPage" variant="primary">Go to recipe preparing</b-button>
                 <div>
                   Ready in {{ recipe.readyInMinutes }} minutes
                   <b-icon icon="alarm-fill" variant="info"></b-icon>
