@@ -8,7 +8,7 @@
       class="mb-1 card"
     >
       <template #header>
-        <b-link :to="{ name:'recipe', params: { recipeId: recipe.recipeid, myrecipe: myrecipe, family:family, recipe:recipe } }"><button @click="markAsViewed" class="text-dark invisible-button">{{ recipe.title }}</button></b-link>
+        <b-link :to="{ name:'recipe', params: { recipeId: recipe.recipeid, myrecipe: myrecipe, family:family, recipe:recipe, favorable:favorable } }"><button @click="markAsViewed" class="text-dark invisible-button">{{ recipe.title }}</button></b-link>
       </template>
       <b-link :to="{ name:'recipe', params: { recipeId: recipe.recipeid, myrecipe: myrecipe, family:family, recipe:recipe } }">
           <b-card-img 
@@ -24,7 +24,8 @@
         <b-list-group-item>{{ recipe.aggregateLikes }} likes</b-list-group-item>
       </b-list-group>
       <template #footer>
-        <icons :recipe="recipe"></icons>
+        <icons :favorable="favorable" :recipe="recipe"></icons>
+      
       </template>
     </b-card>
   </div>
@@ -59,6 +60,10 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    favorable: {
+      type: Boolean,
+      default: true
     }
   },
   methods: {

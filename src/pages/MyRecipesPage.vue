@@ -1,6 +1,6 @@
 <template>
     <div>
-      <RecipePreviewList :recipes="recipes" :myrecipe=true :columns=2 :amount=4 title="My Recipes" class="Recipes center" />
+      <RecipePreviewList :recipes="recipes" :myrecipe=true :columns=2 :amount=4 title="My Recipes" :favorable=false class="Recipes center" />
     </div>
   </template>
   

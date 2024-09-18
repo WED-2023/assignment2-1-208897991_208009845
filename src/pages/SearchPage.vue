@@ -147,20 +147,23 @@ export default {
         selectedFilter: this.selectedFilter,
         sortOption: this.sortOption,
       };
+      
       localStorage.setItem('searchState', JSON.stringify(searchState));
+      localStorage.setItem('searchResults', JSON.stringify(this.recipes));
     },
     loadState() {
       const savedState = localStorage.getItem('searchState');
       if (savedState) {
         const { query, numberOfResults, selectedCuisine, selectedDiet, selectedIntolerance, selectedFilter, sortOption } = JSON.parse(savedState);
         this.query = query;
-        this.numberOfResults = numberOfResults;
-        this.selectedCuisine = selectedCuisine;
-        this.selectedDiet = selectedDiet;
+        this.numberOfResults = numberOfResults || 5;
+        this.selectedCuisine = selectedCuisine || '';
+        this.selectedDiet = selectedDiet || '';
         this.selectedIntolerance = selectedIntolerance;
-        this.selectedFilter = selectedFilter;
-        this.sortOption = sortOption;
+        this.selectedFilter = selectedFilter || '';
+        this.sortOption = sortOption || '';
       }
+      this.recipes = JSON.parse(localStorage.getItem('searchResults')) || [];
     },
   },
   mounted() {

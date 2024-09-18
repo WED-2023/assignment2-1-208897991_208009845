@@ -8,10 +8,11 @@
             <div class="left">
               <img :src="recipe.image" class="image" />
               <div class="info">
-                <icons :recipe="recipe"></icons>
+                <icons :recipe="recipe" :favorable="favorable" style="margin-top: 10px; margin-bottom: 5px;"></icons>
                 <b-button @click="goToMealPreparationPage" variant="primary">Go to recipe preparing</b-button>
+                
                 <div>
-                  Ready in {{ recipe.readyInMinutes }} minutes
+                </br>Ready in {{ recipe.readyInMinutes }} minutes
                   <b-icon icon="alarm-fill" variant="info"></b-icon>
                 </div>
                 <div>Likes: {{ recipe.aggregateLikes }} likes
@@ -62,10 +63,11 @@ export default {
     recipe: {
       type: Object,
       required: true
+    },
+    favorable: {
+      type: Boolean,
+      default: true
     }
-  },
-  mounted() {
-    console.log("got into RecipePage", this.recipe);
   },
   components: {
     icons

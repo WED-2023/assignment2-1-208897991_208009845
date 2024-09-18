@@ -1,6 +1,6 @@
 <template>
   <div>
-    <RecipePreviewList :recipes="recipes" :columns="2" :amount="4" :family=true title="Family Recipe" class="Recipes center" />
+    <RecipePreviewList :recipes="recipes" :columns="2" :amount="4" :family=true title="Family Recipe" class="Recipes center" :favorable=false />
   </div>
 </template>
 

@@ -248,26 +248,23 @@ export default {
       return $dirty ? !$error : null;
     },
     async Register() {
-      // console.log("First Name:", this.form.firstname);
-      // console.log("Last Name:", this.form.lastname);
-  
-  try {
-    const response = await axios.post(
-      this.$root.store.server_domain + "/register",
-      {
-        username: this.form.username,
-        firstname: this.form.firstname, 
-        lastname: this.form.lastname,  
-        password: this.form.password,
-        country: this.form.country,
-        email: this.form.email
+      try {
+        const response = await axios.post(
+          this.$root.store.server_domain + "/register",
+          {
+            username: this.form.username,
+            firstname: this.form.firstname, 
+            lastname: this.form.lastname,  
+            password: this.form.password,
+            country: this.form.country,
+            email: this.form.email
+          }
+        );
+        this.$router.push("/loginpage");
+      } catch (err) {
+        this.form.submitError = err.response?.data?.message || "Register failed";
       }
-    );
-    this.$router.push("/loginpage");
-  } catch (err) {
-    this.form.submitError = err.response?.data?.message || "Register failed";
-  }
-},
+    },
     onRegister() {
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {

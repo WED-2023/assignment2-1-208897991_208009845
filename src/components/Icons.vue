@@ -9,7 +9,7 @@
 
         <label style="background-color: transparent;">
         <input type="checkbox" @change="toggleFavorite" class="custom-checkbox"> 
-        <img :src="favoriteImage" alt="Favorite" class="favorite-icon">
+        <img v-if="favorable" :src="favoriteImage" alt="Favorite" class="favorite-icon">
         </label>
     </div>
 </template>
@@ -28,7 +28,11 @@ export default {
     props: {
         recipe: {
             required: true
-        }
+        },
+        favorable: {
+            type: Boolean,
+            default: true
+        },
     },
     computed: {
         favoriteImage() {
@@ -54,14 +58,12 @@ export default {
             return viewedRecipes.includes(this.recipe.recipeid);
         },
         async checkIfFavorite(){
-            console.log('checkIfFavorite');
             let favoriteRecipes = JSON.parse(sessionStorage.getItem('favoriteRecipes')) || [];
             if (favoriteRecipes.length === 0) {
                 favoriteRecipes = await this.axios.get(this.$root.store.server_domain + '/users/favoritesID');
                 favoriteRecipes = favoriteRecipes.data;
                 sessionStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
             }
-            console.log(favoriteRecipes.includes(this.recipe.recipeid))
             return favoriteRecipes.includes(this.recipe.recipeid);
         },
         async toggleFavorite() {
@@ -97,12 +99,10 @@ export default {
         async addFavorite(username, recipeId) {
             
             let favoriteRecipes = JSON.parse(sessionStorage.getItem('favoriteRecipes')) || [];
-            console.log('before add:', favoriteRecipes);
             if (!favoriteRecipes.includes(recipeId)) {
                 favoriteRecipes.push(recipeId);
                 sessionStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
             }
-            console.log('after add:', favoriteRecipes);
             const response = await this.axios.post(this.$root.store.server_domain + '/users/favorites', {
                 "username":username,
                 "recipeId":recipeId
@@ -133,12 +133,14 @@ export default {
 .vegi {
   width: 30px;
   height: auto;
+  margin-left: 5px;
 }
 .favorite-icon
 {
   width: 30px;
   height: auto;
   margin-top: 5px;
+  margin-left: 5px;
 }
 
 .custom-checkbox {

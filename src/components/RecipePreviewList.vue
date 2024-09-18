@@ -7,7 +7,7 @@
     </h3>
     <b-row :cols="columns" class="custom-row">
       <b-col v-for="r in recipes" :key="r.id" class="custom-col">
-        <RecipePreview class="recipePreview" :recipe="r" :myrecipe=myrecipe :family=family />
+        <RecipePreview class="recipePreview" :recipe="r" :myrecipe=myrecipe :family=family :favorable="favorable"/>
       </b-col>
     </b-row>
   </b-container>
@@ -53,6 +53,10 @@ export default {
       type: Number,
       required: false,
       default: 0
+    },
+    favorable: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -78,7 +82,6 @@ export default {
         this.recipes = response.data; 
       
         sessionStorage.setItem(this.id+'recipes', JSON.stringify(this.recipes)); // Save to local storage
-       console.log(this.recipes);
       } catch (error) {
       console.error("Error fetching recipes:", error);
       }

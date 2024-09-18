@@ -35,7 +35,6 @@ export default {
         const response = await this.axios.get(
           this.$root.store.server_domain +"/users/favoritesrecipe"
         );
-        console.log(response.data);
         return response;
       } catch (error) {
         console.error("Error fetching favorites recipes:", error);
